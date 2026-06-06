@@ -3,15 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
-    <title>JANGKAR · Ruang Hadir untuk Orang Tua</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <meta name="description" content="Parenting Compass Pro - Ekosistem Pengasuhan Digital Pintar & Perlindungan Anak">
+    <title>Parenting Compass Pro | Ruang Hadir Orang Tua</title>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Quicksand:wght@600;700;800&display=swap" rel="stylesheet">
+    
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        /* ======================== DESIGN SYSTEM & TOKENS ======================== */
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         :root {
             --navy: #1A1A2E;
@@ -35,110 +38,95 @@
             color: var(--navy);
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
             min-height: 100vh;
-            padding: 24px 16px;
+            padding: 0;
         }
 
-        /* Phone mockup */
-        .phone {
-            max-width: 390px;
+        /* Responsive Container - Menggantikan Bingkai HP */
+        .app-wrapper {
             width: 100%;
+            max-width: 600px;
             background: var(--offwhite);
-            border-radius: 44px;
-            overflow: hidden;
-            box-shadow: 0 40px 60px rgba(0,0,0,0.4), 0 0 0 8px var(--navy), 0 0 0 12px var(--navy-light);
-            position: relative;
-        }
-
-        /* Status bar */
-        .status-bar {
-            background: var(--navy);
-            padding: 14px 24px 10px;
-            display: flex;
-            justify-content: space-between;
-            color: var(--cream);
-            font-size: 14px;
-            font-weight: 600;
-            font-family: system-ui, sans-serif;
-        }
-
-        /* Bottom navigation */
-        .bottom-nav {
-            background: var(--white);
-            border-top: 1px solid var(--cream-dark);
-            display: flex;
-            padding: 8px 0 20px;
-            backdrop-filter: blur(10px);
-        }
-
-        .nav-item {
-            flex: 1;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
+            position: relative;
+            box-shadow: 0 0 40px rgba(0,0,0,0.5);
+        }
+
+        /* Dynamic Navigation Header */
+        .dynamic-header {
+            background: var(--offwhite);
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--cream-dark);
+            display: none;
             align-items: center;
-            gap: 4px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 6px 0;
-            transition: all 0.2s;
-            color: var(--muted);
-            font-size: 10px;
-            font-family: system-ui;
-            font-weight: 500;
+            gap: 12px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
+        .dynamic-header button { background: none; border: none; cursor: pointer; font-size: 18px; color: var(--navy); }
+        .header-brand { font-weight: 700; font-size: 13px; letter-spacing: 1px; text-transform: uppercase; }
 
-        .nav-item.active {
-            color: var(--rust);
-        }
-
-        .nav-item i {
-            font-size: 20px;
-            margin-bottom: 2px;
-        }
-
-        /* Screens */
+        /* Screens Layout */
         .screen {
             display: none;
-            animation: fadeIn 0.3s ease;
-            min-height: 650px;
-            max-height: 720px;
-            overflow-y: auto;
-            padding-bottom: 16px;
+            animation: screenFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            padding: 20px;
+            flex: 1;
+            padding-bottom: 100px;
         }
-
-        .screen.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
+        .screen.active { display: block; }
+        @keyframes screenFadeIn {
             from { opacity: 0; transform: translateY(8px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Cards */
+        /* Cards UI System */
         .card {
             background: var(--white);
             border-radius: 24px;
             padding: 20px;
             margin-bottom: 16px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
             border: 1px solid var(--cream-dark);
         }
-
         .card-title {
-            font-size: 18px;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 17px;
             font-weight: 700;
             display: flex;
             align-items: center;
             gap: 10px;
-            margin-bottom: 16px;
+            margin-bottom: 14px;
             color: var(--navy);
             border-left: 4px solid var(--gold);
-            padding-left: 14px;
+            padding-left: 12px;
+        }
+        .desc { font-size: 0.88rem; color: var(--navy-light); line-height: 1.5; margin-bottom: 14px; text-align: justify; }
+
+        /* Form Components */
+        label { font-weight: 700; font-size: 0.82rem; color: var(--navy-mid); display: block; margin-bottom: 6px; margin-top: 12px; }
+        textarea, input, select {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 14px;
+            border: 1.5px solid var(--cream-dark);
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            background: var(--white);
+            color: var(--navy);
+            outline: none;
+            transition: all 0.2s;
+        }
+        textarea:focus, input:focus, select:focus {
+            border-color: var(--rust);
+            box-shadow: 0 0 0 3px rgba(200,75,49,0.08);
         }
 
+        /* Button UI System */
         .btn-primary {
             background: var(--navy);
             color: var(--cream);
@@ -146,568 +134,663 @@
             padding: 14px 20px;
             border-radius: 40px;
             font-weight: 600;
-            font-size: 15px;
+            font-size: 14px;
             width: 100%;
             cursor: pointer;
-            transition: 0.2s;
-            font-family: 'Inter', sans-serif;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 4px 12px rgba(26,26,46,0.15);
         }
-
-        .btn-primary:active {
-            transform: scale(0.97);
-            background: var(--rust);
-        }
-
+        .btn-primary:active { transform: scale(0.98); background: var(--rust); }
         .btn-outline {
             background: transparent;
             border: 1.5px solid var(--cream-dark);
             padding: 10px 16px;
             border-radius: 40px;
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 13px;
             cursor: pointer;
-        }
-
-        textarea, input {
-            width: 100%;
-            padding: 14px 16px;
-            border-radius: 20px;
-            border: 1.5px solid var(--cream-dark);
-            font-family: 'Inter', sans-serif;
-            font-size: 14px;
-            background: var(--white);
+            color: var(--navy-light);
             transition: 0.2s;
         }
+        .btn-outline:hover { background: var(--cream); }
 
-        textarea:focus, input:focus {
-            outline: none;
-            border-color: var(--rust);
-            box-shadow: 0 0 0 3px rgba(200,75,49,0.1);
-        }
+        /* Custom Progress Bars */
+        .progress-container { height: 6px; background: var(--cream-dark); border-radius: 10px; overflow: hidden; margin: 12px 0; }
+        .progress-fill { height: 100%; background: var(--rust); width: 0%; transition: width 0.4s ease; }
 
-        /* Custom scroll */
-        .screen::-webkit-scrollbar {
-            width: 4px;
-        }
-        .screen::-webkit-scrollbar-track {
-            background: var(--cream-dark);
-            border-radius: 4px;
-        }
-        .screen::-webkit-scrollbar-thumb {
-            background: var(--sage);
-            border-radius: 4px;
-        }
-
-        /* Progress bar */
-        .progress-bar {
-            height: 6px;
-            background: var(--cream-dark);
-            border-radius: 10px;
-            overflow: hidden;
-        }
-        .progress-fill {
-            height: 100%;
-            background: var(--rust);
-            width: 0%;
-            transition: width 0.3s;
-        }
-
-        /* Rantai chain */
-        .chain-node {
-            position: relative;
-            padding-left: 40px;
-            margin-bottom: 24px;
-        }
+        /* Multidisciplinary Chain Nodes Architecture (Hasil Diagnostik) */
+        .chain-node { position: relative; padding-left: 36px; margin-bottom: 16px; }
         .chain-dot {
-            position: absolute;
-            left: 8px;
-            top: 8px;
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            background: var(--cream-dark);
-            border: 2px solid var(--muted);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 2;
+            position: absolute; left: 4px; top: 4px; width: 24px; height: 24px; border-radius: 50%;
+            background: var(--white); border: 2.5px solid var(--muted); display: flex;
+            align-items: center; justify-content: center; z-index: 2; font-size: 11px; font-weight: 700;
         }
-        .chain-line {
-            position: absolute;
-            left: 21px;
-            top: 36px;
-            bottom: -20px;
-            width: 2px;
-            background: linear-gradient(to bottom, var(--muted), var(--sage));
-            z-index: 1;
+        .chain-line { position: absolute; left: 15px; top: 28px; bottom: -20px; width: 2px; background: var(--cream-dark); z-index: 1; }
+        .chain-card { background: var(--white); border-radius: 18px; padding: 14px; border: 1px solid var(--cream-dark); text-align: justify; }
+        .chain-card.node-psycho { border-left: 4px solid var(--navy-light); }
+        .chain-card.node-medical { border-left: 4px solid var(--sage); }
+        .chain-card.node-legal { border-left: 4px solid var(--rust); }
+        .node-title { font-weight: 700; font-size: 0.85rem; color: var(--navy); margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
+        .node-body { font-size: 0.8rem; color: var(--navy-light); line-height: 1.4; }
+
+        /* Chat System UI */
+        .chat-space { background: rgba(237,232,224,0.3); border-radius: 20px; padding: 14px; height: 280px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; border: 1px solid var(--cream-dark); margin-bottom: 12px; }
+        .bubble { max-width: 85%; padding: 10px 14px; font-size: 0.85rem; line-height: 1.4; }
+        .bubble-bot { align-self: flex-start; background: var(--white); color: var(--navy); border-radius: 16px 16px 16px 4px; border: 1px solid var(--cream-dark); }
+        .bubble-user { align-self: flex-end; background: var(--navy); color: var(--cream); border-radius: 16px 16px 4px 16px; }
+        .chat-input-wrapper { display: flex; gap: 6px; }
+        .btn-circle { width: 46px; height: 46px; border-radius: 50%; border: none; background: var(--navy); color: var(--white); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px; }
+        .btn-circle.recording { background: var(--rust); animation: pulseGlow 1.2s infinite; }
+        @keyframes pulseGlow { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+
+        /* Gamifikasi Token Elemen */
+        .badge-box { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+        .badge-token { background: var(--cream); color: var(--rust); padding: 6px 12px; border-radius: 50px; font-size: 0.75rem; font-weight: 700; display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--cream-dark); }
+        .quiz-options { display: flex; gap: 10px; margin-top: 10px; }
+        .quiz-options button { flex: 1; padding: 12px; border-radius: 20px; border: none; font-weight: 700; cursor: pointer; color: white; transition: 0.2s; }
+        
+        .timer-digits { font-size: 2.5rem; font-family: monospace; font-weight: 700; text-align: center; color: var(--navy); margin: 12px 0; letter-spacing: 2px; }
+
+        /* Fixed Bottom Navigation Bar */
+        .bottom-nav {
+            position: absolute; bottom: 0; left: 0; right: 0; background: var(--white);
+            border-top: 1px solid var(--cream-dark); display: flex; padding: 8px 0 20px; z-index: 200;
         }
-        .chain-card {
-            background: var(--white);
-            border-radius: 20px;
-            padding: 14px 16px;
-            border: 1px solid var(--cream-dark);
-            cursor: pointer;
-            transition: 0.2s;
+        .nav-item {
+            flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px;
+            background: none; border: none; cursor: pointer; padding: 4px 0; color: var(--muted);
+            font-size: 10px; font-weight: 600; transition: all 0.2s;
         }
-        .chain-card.highlight {
-            border-left: 4px solid var(--rust);
-            background: rgba(200,75,49,0.02);
-        }
+        .nav-item i { font-size: 18px; }
+        .nav-item.active { color: var(--rust); }
+
+        footer { font-size: 0.68rem; text-align: center; padding: 16px; color: var(--muted); background: var(--white); border-top: 1px solid var(--cream-dark); }
     </style>
 </head>
 <body>
-<div class="phone">
-    <div class="status-bar">
-        <span>9:41</span>
-        <span><i class="fas fa-signal"></i> <i class="fas fa-battery-full"></i></span>
+
+<div class="app-wrapper">
+    <div id="dynamicHeader" class="dynamic-header">
+        <button id="backHomeBtn"><i class="fas fa-arrow-left"></i></button>
+        <div class="header-brand"><i class="fas fa-compass" style="color: var(--rust); margin-right: 4px;"></i> Compass · <span id="headerTitle">Laporan</span></div>
     </div>
 
-    <!-- header dinamis (tidak untuk home) -->
-    <div id="dynamicHeader" style="background: var(--offwhite); padding: 12px 20px; border-bottom: 1px solid var(--cream-dark); display: none; align-items: center; gap: 12px;">
-        <button id="backHomeBtn" style="background: none; border: none; cursor: pointer; font-size: 20px; color: var(--navy);"><i class="fas fa-arrow-left"></i></button>
-        <div><i class="fas fa-anchor" style="color: var(--rust); margin-right: 6px;"></i><span style="font-weight: 600; font-size: 13px; letter-spacing: 1px;">JANGKAR · <span id="headerTitle">Cermin</span></span></div>
-    </div>
-
-    <!-- Layar Beranda -->
     <div id="homeScreen" class="screen active">
-        <div style="background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%); padding: 28px 24px 32px; border-radius: 0 0 32px 32px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <div style="background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%); padding: 24px 20px 28px; border-radius: 0 0 28px 28px; margin: -20px -20px 20px -20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
                 <div>
-                    <p style="color: var(--muted); font-size: 13px; font-family: system-ui;" id="currentDate"></p>
-                    <h1 style="color: var(--cream); font-size: 26px; font-weight: 700; margin: 0;">Halo, <span id="userNameDisplay">Orang Tua Hebat</span> <span style="color: var(--gold);">👋</span></h1>
+                    <p style="color: var(--muted); font-size: 11px; font-weight: 500;" id="currentDate"></p>
+                    <h2 style="color: var(--cream); font-size: 22px; font-weight: 700; margin-top: 2px;">Mulai Hadir, <span id="userNameDisplay">Orang Tua Hebat</span> <span style="color: var(--gold);">✨</span></h2>
                 </div>
-                <button id="editNameBtn" style="background: rgba(255,255,255,0.1); border: none; color: var(--gold); padding: 8px 12px; border-radius: 40px; font-size: 12px; cursor: pointer;"><i class="fas fa-pen"></i></button>
+                <button id="editNameBtn" style="background: rgba(255,255,255,0.1); border: none; color: var(--gold); padding: 6px 12px; border-radius: 40px; font-size: 11px; cursor: pointer;"><i class="fas fa-pen"></i> Nama</button>
             </div>
-            <p style="color: rgba(245,240,232,0.8); font-size: 14px; margin: 8px 0 0;">Setiap hari hadir adalah pilihan.</p>
-            <div style="background: rgba(255,255,255,0.08); border-radius: 20px; padding: 14px 18px; margin-top: 24px;">
-                <div style="display: flex; align-items: center; gap: 12px;">
-                    <i class="fas fa-heart" style="color: var(--gold); font-size: 20px;"></i>
+            <div style="background: rgba(255,255,255,0.06); border-radius: 16px; padding: 12px 16px; margin-top: 16px;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-circle-nodes" style="color: var(--gold); font-size: 18px;"></i>
                     <div>
-                        <p style="color: var(--gold); font-weight: 700; font-size: 14px; margin: 0;">Hari ini penuh makna</p>
-                        <p style="color: var(--cream); font-size: 12px; margin: 0;">Kamu sudah menyelesaikan <span id="homeProgressCount">0</span> dari 4 tantangan hadir</p>
+                        <p style="color: var(--gold); font-weight: 700; font-size: 13px;">Progres Detoks Gawai Hari Ini</p>
+                        <p style="color: var(--cream); font-size: 11px;">Anda menyelesaikan <span id="homeProgressCount">0</span> dari 4 komitmen asuh harian</p>
                     </div>
                 </div>
-                <div class="progress-bar" style="margin-top: 12px;"><div class="progress-fill" id="homeProgressFill" style="width: 0%;"></div></div>
+                <div class="progress-container"><div class="progress-fill" id="homeProgressFill"></div></div>
             </div>
         </div>
 
-        <div style="padding: 24px 20px;">
-            <div class="card" style="background: var(--cream); border-left: 5px solid var(--rust);">
-                <i class="fas fa-quote-left" style="color: var(--gold); margin-bottom: 8px; display: block;"></i>
-                <p style="font-style: italic; font-size: 14px; line-height: 1.6;">"Anak-anak tidak akan ingat mainan mewahmu. Yang mereka ingat adalah saat kamu benar-benar mendengar cerita mereka."</p>
+        <div class="card">
+            <div class="card-title"><i class="fas fa-comments-text"></i> Asisten Konseling Interaktif</div>
+            <p class="desc">Tuliskan kendala psikologis anak (kata kunci disarankan: <em>hp, tantrum, malas belajar, ibadah</em>) untuk mendapatkan rujukan pola asuh klinis instan.</p>
+            <div class="chat-space" id="chatArea">
+                <div class="bubble bubble-bot">Selamat datang. Sampaikan kondisi atau keluhan buah hati Anda secara tenang di sini.</div>
             </div>
-
-            <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 8px;">
-                <button class="nav-quick btn-primary" data-nav="cermin" style="background: var(--navy);"><i class="fas fa-mirror"></i> Cermin — Refleksi Hari Ini</button>
-                <button class="nav-quick btn-primary" data-nav="hadir" style="background: var(--rust);"><i class="fas fa-hand-peace"></i> Hadir — Tantangan Mikro</button>
-                <button class="nav-quick btn-primary" data-nav="rantai" style="background: var(--sage);"><i class="fas fa-link"></i> Rantai — Peta Lintas Generasi</button>
-                <button class="nav-quick btn-primary" data-nav="ruang" style="background: var(--navy-light);"><i class="fas fa-users"></i> Ruang — Komunitas Anonim</button>
+            <div class="chat-input-wrapper">
+                <input type="text" id="userInput" placeholder="Ketik keluhan pengasuhan...">
+                <button id="sendBtn" class="btn-circle" title="Kirim"><i class="fas fa-paper-plane"></i></button>
+                <button id="voiceBtn" class="btn-circle btn-voice" title="Input Suara"><i class="fas fa-microphone"></i></button>
             </div>
         </div>
+
+        <div class="card" id="dailyTip" style="background: var(--cream); border-left: 4px solid var(--rust);">
+            <i class="fas fa-lightbulb" style="color: var(--gold); margin-bottom: 4px; display: block;"></i>
+            <p style="font-size: 13px; line-height: 1.5; font-style: italic;">Memuat analisis waktu...</p>
+        </div>
+        
+        <div class="card">
+            <div class="card-title"><i class="fas fa-bell"></i> Sinkronisasi Refleksi</div>
+            <button id="checkinReminderBtn" class="btn-primary" style="background: var(--navy-light);"><i class="fas fa-clock"></i> Aktifkan Pengingat Evaluasi Malam (20:00)</button>
+            <p id="checkinStatus" style="font-size: 0.72rem; margin-top: 6px; color: var(--sage); font-weight: 700;"></p>
+        </div>
     </div>
 
-    <!-- CERMIN SCREEN -->
-    <div id="cerminScreen" class="screen">
-        <div style="background: var(--navy); padding: 20px 24px 28px;">
-            <h2 style="color: var(--cream); font-size: 24px; margin: 0 0 4px;"><i class="fas fa-mirror"></i> Cermin</h2>
-            <p style="color: rgba(245,240,232,0.7); font-size: 13px;">Berlaku jujur pada luka yang tak punya nama</p>
+    <div id="logScreen" class="screen">
+        <div class="card">
+            <div class="card-title"><i class="fas fa-chart-line"></i> Registrasi Durasi Gawai</div>
+            <div class="form-layout">
+                <label>📅 Hari / Tanggal Evaluasi</label>
+                <input type="date" id="logDate">
+                <label>⏱ Durasi Konsumsi Layar Anak (Jam)</label>
+                <input type="number" step="0.5" id="duration" placeholder="Contoh: 1.5 atau 2">
+                <label>🧠 Karakteristik Emosi Pasca Gawai</label>
+                <select id="mood">
+                    <option value="senang">😊 Kooperatif / Stabil / Tenang</option>
+                    <option value="biasa">😐 Biasa Saja / Netral</option>
+                    <option value="rewel">😠 Tantrum / Agresif / Marah</option>
+                    <option value="lelah">😴 Letargi / Lesu / Lelah</option>
+                </select>
+                <button id="saveLogBtn" class="btn-primary" style="background: var(--rust); margin-top: 10px;"><i class="fas fa-bookmark"></i> Simpan Rekam Jejak</button>
+            </div>
         </div>
-        <div style="padding: 20px;" id="cerminContainer"></div>
+
+        <div id="aktivitasRekomendasi" class="card" style="background: var(--cream); border-left: 4px solid var(--sage); display: none;"></div>
+
+        <div class="card">
+            <div class="card-title"><i class="fas fa-chart-bar"></i> Matriks Temporal Mingguan</div>
+            <div style="position: relative; width: 100%; height: 200px;">
+                <canvas id="weeklyChart"></canvas>
+            </div>
+            <div id="weeklyEvaluation" style="margin-top: 14px;"></div>
+            
+            <div class="expert-analysis-box" id="multidisciplinaryBox" style="margin-top: 20px; display: none;">
+                <div class="chain-node">
+                    <div class="chain-dot">1</div><div class="chain-line"></div>
+                    <div class="chain-card node-psycho">
+                        <div class="node-title"><i class="fas fa-brain"></i> Analisis Psikologi Perkembangan</div>
+                        <div class="node-body" id="nodePsychoText">-</div>
+                    </div>
+                </div>
+                <div class="chain-node">
+                    <div class="chain-dot">2</div><div class="chain-line"></div>
+                    <div class="chain-card node-medical">
+                        <div class="node-title"><i class="fas fa-stethoscope"></i> Parameter Klinis Medis (IDAI / WHO)</div>
+                        <div class="node-body" id="nodeMedicalText">-</div>
+                    </div>
+                </div>
+                <div class="chain-node">
+                    <div class="chain-dot">3</div>
+                    <div class="chain-card node-legal">
+                        <div class="node-title"><i class="fas fa-gavel"></i> Aspek Regulasi & Perlindungan Anak</div>
+                        <div class="node-body" id="nodeLegalText">-</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button id="exportPDFBtn" class="btn-primary"><i class="fas fa-file-pdf"></i> Unduh Berkas Laporan PDF Formal</button>
     </div>
 
-    <!-- HADIR SCREEN -->
-    <div id="hadirScreen" class="screen">
-        <div style="background: linear-gradient(135deg, var(--rust) 0%, var(--rust-light) 100%); padding: 20px 24px 28px;">
-            <h2 style="color: white; font-size: 24px; margin: 0 0 4px;"><i class="fas fa-heart"></i> Hadir</h2>
-            <p style="color: rgba(255,255,240,0.9);">4 momen kecil, dampak besar</p>
-            <div class="progress-bar" style="margin-top: 16px;"><div class="progress-fill" id="hadirProgressFill" style="width: 0%; background: var(--gold);"></div></div>
-            <p style="color: white; font-size: 12px; margin-top: 6px;" id="hadirProgressText">0/4 selesai</p>
+    <div id="gameScreen" class="screen">
+        <div class="card" style="background: linear-gradient(to bottom right, var(--white), var(--cream));">
+            <div class="card-title"><i class="fas fa-trophy" style="color: var(--gold);"></i> Misi 1 Jam Bebas Gawai</div>
+            <p class="desc">Latih regulasi diri anak menggunakan mekanisme pengkondisian operan (*operant conditioning*). Beraktivitaslah tanpa layar selama 60 menit penuh untuk mengklaim tanda penghargaan.</p>
+            <button id="startChallengeBtn" class="btn-primary" style="background: var(--navy);"><i class="fas fa-play"></i> Mulai Penghitungan Misi</button>
+            <div id="timerDisplay" class="timer-digits">⏳ --:--</div>
         </div>
-        <div style="padding: 20px;" id="hadirTasksContainer"></div>
+
+        <div class="card">
+            <div class="card-title"><i class="fas fa-medal"></i> Kabinet Lencana Keberhasilan</div>
+            <div id="badgeList" class="badge-box"></div>
+        </div>
+
+        <div class="card" id="kuisCard">
+            <div class="card-title"><i class="fas fa-square-poll-vertical"></i> Konfirmasi Perilaku Sehat</div>
+            <p id="pertanyaanKuis" style="font-weight: 600; font-size: 14px;">Apakah hari ini anak dilibatkan aktif dalam gerak fisik luar ruang minimal 45 menit?</p>
+            <div class="quiz-options">
+                <button id="jawabanYa" style="background: var(--sage);"><i class="fas fa-check"></i> Terpenuhi</button>
+                <button id="jawabanTidak" style="background: var(--rust);"><i class="fas fa-times"></i> Belum Selesai</button>
+            </div>
+            <div id="hasilKuis" style="margin-top: 12px;"></div>
+        </div>
     </div>
 
-    <!-- RANTAI SCREEN -->
-    <div id="rantaiScreen" class="screen">
-        <div style="background: var(--navy); padding: 20px 24px 28px;">
-            <h2 style="color: var(--cream); font-size: 24px; margin: 0 0 4px;"><i class="fas fa-link"></i> Rantai</h2>
-            <p style="color: rgba(245,240,232,0.7);">Lihat warisan, lalu pilih untuk memutus atau merangkul</p>
+    <div id="timerScreen" class="screen">
+        <div class="card">
+            <div class="card-title"><i class="fas fa-hourglass-start"></i> Intervensi Atensi Terstruktur</div>
+            <p class="desc">Gunakan pembatasan waktu berbasis sains untuk membagi durasi belajar, mengaji, atau berinteraksi sosial anak demi melatih kontrol kognitif.</p>
+            <div class="form-layout">
+                <label>Setel Durasi Aktivitas Positif (Menit):</label>
+                <input type="number" id="customMinutes" value="30" step="5" min="1" style="text-align: center; font-size: 18px; font-weight: 700;">
+                <button id="startTimerBtn" class="btn-primary" style="background: var(--navy); margin-top: 6px;"><i class="fas fa-play"></i> Eksekusi Penghitung Waktu</button>
+            </div>
+            <div class="timer-digits" id="countdownDisplay" style="font-size: 3.5rem; color: var(--rust);">00:00</div>
+            <p id="timerMessage" style="text-align: center; font-size: 13px; font-weight: 600; color: var(--navy-light);"></p>
         </div>
-        <div style="padding: 20px;" id="rantaiContainer"></div>
-        <div style="padding: 0 20px 24px;"><button id="saveRantaiBtn" class="btn-primary" style="background: var(--sage);">Simpan catatan rantai</button></div>
+
+        <div class="card" style="background: var(--cream);">
+            <div class="card-title"><i class="fas fa-brain"></i> Neuropsikologi Fokus</div>
+            <p class="desc" style="margin-bottom:0;">Rentang konsentrasi ideal anak adalah $2 \times \text{Usia Anak}$ dalam menit. Pembiasaan pengerjaan tugas menggunakan batas *timer* terstruktur melatih kesiapan fungsional *prefrontal cortex*, meningkatkan kapasitas *delayed gratification*, serta mengeliminasi kelelahan kognitif (*cognitive fatigue*).</p>
+        </div>
     </div>
 
-    <!-- RUANG SCREEN -->
-    <div id="ruangScreen" class="screen">
-        <div style="background: var(--navy); padding: 20px 24px 28px;">
-            <h2 style="color: var(--cream); font-size: 24px; margin: 0 0 4px;"><i class="fas fa-leaf"></i> Ruang</h2>
-            <p style="color: rgba(245,240,232,0.7);">Tanpa nama, tanpa foto. Hanya cerita.</p>
+    <div id="emergencyScreen" class="screen">
+        <div class="card" style="background: #FFF0F0; border: 1px solid #F8D7DA; text-align: center;">
+            <i class="fas fa-heart-circle-exclamation" style="font-size: 32px; color: var(--rust); margin-bottom: 8px;"></i>
+            <h3 style="color: var(--navy); font-size: 16px; margin-bottom: 6px;">Layanan Intervensi Klinis Akut</h3>
+            <p class="desc" style="text-align: center;">Bila anak memperlihatkan gejala tantrum destruktif ekstrem, menarik diri secara radikal (*social withdrawal*), atau kecanduan gawai akut, segera hubungi tenaga medis profesional.</p>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+                <a href="https://www.halodoc.com/cari-psikolog-anak" target="_blank" class="btn-primary" style="background: var(--rust); text-decoration: none;"><i class="fas fa-user-user"></i> Temui Psikolog Anak Online</a>
+                <a href="tel:119" class="btn-primary" style="background: var(--navy-mid); text-decoration: none;"><i class="fas fa-phone-volume"></i> Panggil Ambulans / Medis 119</a>
+            </div>
         </div>
-        <div style="padding: 20px;" id="ruangFeed"></div>
-        <div style="padding: 0 20px 24px;">
-            <textarea id="newStoryInput" rows="3" placeholder="Ceritakan keresahan, kemenangan kecil, atau pertanyaan... (100% anonim)" style="margin-bottom: 12px;"></textarea>
-            <button id="shareStoryBtn" class="btn-primary" style="background: var(--navy);"><i class="fas fa-paper-plane"></i> Bagikan secara anonim</button>
+
+        <div class="card">
+            <div class="card-title"><i class="fas fa-gavel"></i> Perlindungan Pidana Siber Anak</div>
+            <p class="desc">Berdasarkan regulasi hukum nasional Republik Indonesia, anak dilindungi secara mutlak dari eksploitasi dan ancaman ruang digital:</p>
+            <ul style="padding-left: 14px; font-size: 12px; color: var(--navy-light); display: flex; flex-direction: column; gap: 8px; text-align: justify;">
+                <li><strong>Kekerasan Seksual Berbasis Elektronik (KSBE):</strong> Sesuai <strong>Pasal 14 & 15 UU TPKS No. 12/2022</strong>, penyebaran materi asusila atau eksploitasi siber yang menyasar anak diancam kurungan pidana maksimal 6 dan denda ratusan juta rupiah.</li>
+                <li><strong>Perundungan Siber (*Cyberbullying*):</strong> Segala bentuk perundungan, intimidasi digital, dan pencemaran nama baik anak diatur secara ketat melalui jerat sanksi pidana <strong>Pasal 27A UU ITE</strong>.</li>
+                <li><strong>Aturan Anti-Restorative Justice:</strong> Pada ranah kejahatan seksual dan kekerasan fisik berat terhadap anak, undang-undang perlindungan anak menegaskan bahwa jalur perdamaian (*Restorative Justice*) <strong>tidak dapat diberlakukan</strong>. Kasus wajib berlanjut hingga tingkat pengadilan demi hak asasi anak.</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <div class="card-title"><i class="fas fa-map-location-dot"></i> Pemetaan Fasilitas Perlindungan</div>
+            <p class="desc">Akses navigasi geografis instan menuju jaringan klinik kesehatan mental atau rumah sakit tumbuh kembang anak terdekat:</p>
+            <div style="background: var(--cream-dark); border-radius: 16px; overflow: hidden; border: 1.5px solid var(--cream-dark);">
+                <iframe src="https://maps.google.com/maps?q=psikolog%20anak&t=&z=13&ie=UTF8&iwloc=&output=embed" allowfullscreen></iframe>
+            </div>
         </div>
     </div>
 
     <div class="bottom-nav">
-        <button class="nav-item" data-nav="home"><i class="fas fa-home"></i><span>Beranda</span></button>
-        <button class="nav-item" data-nav="cermin"><i class="fas fa-mirror"></i><span>Cermin</span></button>
-        <button class="nav-item" data-nav="hadir"><i class="fas fa-heart"></i><span>Hadir</span></button>
-        <button class="nav-item" data-nav="rantai"><i class="fas fa-link"></i><span>Rantai</span></button>
-        <button class="nav-item" data-nav="ruang"><i class="fas fa-users"></i><span>Ruang</span></button>
+        <button class="nav-item active" data-nav="home"><i class="fas fa-comments"></i><span>Konseling</span></button>
+        <button class="nav-item" data-nav="log"><i class="fas fa-history"></i><span>Log Gawai</span></button>
+        <button class="nav-item" data-nav="game"><i class="fas fa-trophy"></i><span>Tantangan</span></button>
+        <button class="nav-item" data-nav="timer"><i class="fas fa-clock"></i><span>Timer Asuh</span></button>
+        <button class="nav-item" data-nav="emergency"><i class="fas fa-shield-alt"></i><span>Darurat</span></button>
     </div>
 </div>
 
 <script>
-    // ---------------------- STORAGE KEYS --------------------------
-    const STORAGE_USER = "jangkar_user";
-    const STORAGE_CERMIN = "jangkar_cermin_last";
-    const STORAGE_HADIR = "jangkar_hadir_daily";
-    const STORAGE_RANTAI = "jangkar_rantai_notes";
-    const STORAGE_RUANG = "jangkar_ruang_posts";
+    // ======================== ENGINE STORAGE KEYS ========================
+    const STORAGE_USER = "compass_username";
+    const STORAGE_LOGS = "compass_device_logs";
+    const STORAGE_HADIR = "compass_hadir_stats";
+    const STORAGE_BADGES = "compass_earned_badges";
 
-    // Data default rantai (pola)
-    let rantaiData = {
-        leluhur: "Kakek nenek bekerja keras, jarang di rumah, cinta ditunjukkan dengan memberi nafkah.",
-        orangtua: "Hadir fisik tapi emosional tertutup. Sering membandingkan dengan anak lain.",
-        diri: "Saya menyadari pola marah yang mirip, tapi saya mulai belajar hadir.",
-        anak: "Generasi baru. Masih bisa dibentuk dengan kehadiran sejati."
+    // ======================== ENGINE NAVIGATION SYSTEM ========================
+    let currentScreen = 'home';
+    const screens = {
+        home: document.getElementById('homeScreen'),
+        log: document.getElementById('logScreen'),
+        game: document.getElementById('gameScreen'),
+        timer: document.getElementById('timerScreen'),
+        emergency: document.getElementById('emergencyScreen')
     };
 
-    // Tantangan Hadir
-    const challenges = [
-        { id: 0, time: "🌅 Pagi", title: "Sapaan Tanpa Gawai", desc: "Sebelum memegang HP, tatap mata anak & ucapkan selamat pagi dengan sepenuh hati.", duration: "2 menit" },
-        { id: 1, time: "☀️ Siang", title: "Pesan Suara Hangat", desc: "Kirim pesan suara (bukan teks) ke anak, cukup 'Ayah/ibu kangen kamu'.", duration: "1 menit" },
-        { id: 2, time: "🌤️ Sore", title: "Duduk Bersama Tanpa Agenda", desc: "Duduk 5 menit di samping anak tanpa bertanya PR atau memberi nasihat.", duration: "5 menit" },
-        { id: 3, time: "🌙 Malam", title: "Satu Pertanyaan Nyata", desc: "Tanya: 'Hari ini apa yang paling membuatmu tersenyum?' Lalu dengarkan tanpa interupsi.", duration: "10 menit" }
-    ];
+    function showScreen(screenId) {
+        Object.keys(screens).forEach(key => { if(screens[key]) screens[key].classList.remove('active'); });
+        if(screens[screenId]) screens[screenId].classList.add('active');
+        currentScreen = screenId;
 
-    // Helper: get today key
-    function getTodayKey() { return new Date().toISOString().slice(0,10); }
+        // Navigasi aktif style
+        document.querySelectorAll('.nav-item').forEach(btn => {
+            if(btn.dataset.nav === screenId) btn.classList.add('active');
+            else btn.classList.remove('active');
+        });
 
-    // Load/Save Hadir
-    function loadHadirState() {
-        const stored = localStorage.getItem(STORAGE_HADIR);
-        const all = stored ? JSON.parse(stored) : {};
-        const today = getTodayKey();
-        return all[today] || {};
-    }
-    function saveHadirState(completedArr) {
-        const stored = localStorage.getItem(STORAGE_HADIR);
-        const all = stored ? JSON.parse(stored) : {};
-        const today = getTodayKey();
-        all[today] = completedArr;
-        localStorage.setItem(STORAGE_HADIR, JSON.stringify(all));
-    }
-    function getCompletedArray() {
-        const state = loadHadirState();
-        const arr = [];
-        for(let i=0; i<challenges.length; i++) if(state[i]) arr.push(i);
-        return arr;
-    }
-    function setCompleted(ids) {
-        const todayState = {};
-        ids.forEach(id => todayState[id]=true);
-        const stored = localStorage.getItem(STORAGE_HADIR);
-        const all = stored ? JSON.parse(stored) : {};
-        all[getTodayKey()] = todayState;
-        localStorage.setItem(STORAGE_HADIR, JSON.stringify(all));
+        // Pengkondisian visibilitas header dinamis
+        const header = document.getElementById('dynamicHeader');
+        if(screenId === 'home') {
+            header.style.display = 'none';
+        } else {
+            header.style.display = 'flex';
+            const titleMapping = { log: 'Log & Analisis Mingguan', game: 'Detoksifikasi Misi', timer: 'Manajemen Atensi', emergency: 'Layanan Darurat & Hukum' };
+            document.getElementById('headerTitle').innerText = titleMapping[screenId] || 'Laporan';
+        }
+
+        // Re-render grafik Chart.js saat tab log diaktifkan
+        if(screenId === 'log') { renderWeeklyChart(); }
+        if(screenId === 'home') { updateHomeStats(); }
     }
 
-    // Render Hadir UI
-    function renderHadir() {
-        const completed = getCompletedArray();
-        const container = document.getElementById('hadirTasksContainer');
-        if(!container) return;
-        container.innerHTML = '';
-        challenges.forEach(ch => {
-            const isDone = completed.includes(ch.id);
-            const div = document.createElement('div');
-            div.className = 'card';
-            div.style.borderLeft = isDone ? `4px solid var(--sage)` : '4px solid var(--gold-light)';
-            div.innerHTML = `
-                <div style="display: flex; justify-content: space-between; align-items: start;">
-                    <div>
-                        <p style="font-size: 12px; color: var(--muted); margin-bottom: 6px;">${ch.time} · ${ch.duration}</p>
-                        <h4 style="margin-bottom: 8px;">${ch.title}</h4>
-                        <p style="font-size: 13px; color: var(--navy-light);">${ch.desc}</p>
-                    </div>
-                    <button class="taskCheckBtn" data-id="${ch.id}" style="background: ${isDone ? 'var(--sage)' : 'var(--cream-dark)'}; border: none; width: 36px; height: 36px; border-radius: 50%; color: white; cursor: pointer;">
-                        ${isDone ? '<i class="fas fa-check"></i>' : '<i class="far fa-circle"></i>'}
-                    </button>
-                </div>
-            `;
+    document.getElementById('backHomeBtn')?.addEventListener('click', () => showScreen('home'));
+    document.querySelectorAll('.nav-item').forEach(btn => {
+        btn.addEventListener('click', () => {
+            let targetNav = btn.dataset.nav;
+            if(targetNav) showScreen(targetNav);
+        });
+    });
+
+    // ======================== ENGINE TAB 1: KONSULTASI &Refleksi ========================
+    const chatArea = document.getElementById("chatArea");
+    const userInput = document.getElementById("userInput");
+    const sendBtn = document.getElementById("sendBtn");
+
+    function getBotResponse(question) {
+        let q = question.toLowerCase();
+        if(q.includes("gadget") || q.includes("hp") || q.includes("game") || q.includes("youtube") || q.includes("gawai")) {
+            if(q.includes("kecanduan") || q.includes("terus") || q.includes("sulit lepas")) {
+                return "📵 [Saran Psikolog Anak]: Anak Anda terindikasi mengalami banjir dopamin digital. Batasi akses maksimal 1 jam/hari (kluster usia 3-6 tahun). Sediakan aktivitas fisik pengganti, buat kesepakatan konsekuensi logis, dan orang tua wajib memberikan teladan nyata.";
+            }
+            if(q.includes("tantrum") || q.includes("marah") || q.includes("ngamuk")) {
+                return "😢 [Panduan Klinis Tantrum]: Saat gawai ditarik dan anak mengamuk, tetaplah tenang, jangan membentak. Amankan fisik anak dari potensi bahaya, validasi emosinya, lalu terapkan teknik jeda tenang (*time-out*). Sanksi fisik dilarang keras oleh UU Perlindungan Anak.";
+            }
+            return "📱 [Metode Co-Viewing]: Dampingi anak secara interaktif saat menggunakan teknologi gawai. Diskusikan esensi materi video, jadikan teknologi sarana stimulasi kognitif aktif, bukan sekadar pengasuh pasif.";
+        }
+        if(q.includes("fokus") || q.includes("belajar")) return "📚 [Neurosains Belajar]: Sterilkan area belajar dari interupsi visual perangkat digital. Libatkan anak secara aktif dalam penyusunan jadwal harian rumah, dan berikan pujian afektif atas usaha belajarnya.";
+        if(q.includes("sosial") || q.includes("pemalu")) return "🤝 [Psikologi Sosial]: Minimalkan durasi konsumsi komunikasi satu arah media digital. Agendakan interaksi sosial nyata bersama rekan sebaya di luar rumah guna merangsang pertumbuhan kecerdasan emosional (EQ) anak.";
+        if(q.includes("doa") || q.includes("agama") || q.includes("ibadah")) return "🕌 [Pedoman Karakter Nilai]: Penanaman nilai spiritual memerlukan pembiasaan terstruktur tanpa tekanan psikologis. Hadirlah sebagai contoh teladan primer (misal shalat/berdoa bersama), sampaikan narasi keteladanan, serta apresiasi perkembangannya.";
+        
+        return "Prinsip Utama: Keteladanan, pembiasaan konsisten, perhatian emosional penuh, dan kasih sayang yang utuh. Ceritakan kondisi lebih spesifik (meliputi usia anak dan durasi paparan) agar asisten dapat mendiagnosis lebih akurat.";
+    }
+
+    function addMessage(text, isUser) {
+        const div = document.createElement("div");
+        div.className = isUser ? "bubble bubble-user" : "bubble bubble-bot";
+        div.innerText = text;
+        chatArea.appendChild(div);
+        chatArea.scrollTop = chatArea.scrollHeight;
+    }
+
+    function handleUserMsg() {
+        let txt = userInput.value.trim();
+        if(!txt) return;
+        addMessage(txt, true);
+        userInput.value = "";
+        setTimeout(() => addMessage(getBotResponse(txt), false), 300);
+    }
+
+    sendBtn.addEventListener("click", handleUserMsg);
+    userInput.addEventListener("keypress", e => { if(e.key === "Enter") handleUserMsg(); });
+
+    // Web Speech Input (Vokal ke Teks)
+    const voiceBtn = document.getElementById("voiceBtn");
+    if ('webkitSpeechRecognition' in window || 'speechRecognition' in window) {
+        const SpeechRecognition = window.webkitSpeechRecognition || window.speechRecognition;
+        const recognition = new SpeechRecognition();
+        recognition.lang = 'id-ID';
+        
+        voiceBtn.onclick = () => { recognition.start(); voiceBtn.classList.add("recording"); };
+        recognition.onresult = (e) => {
+            userInput.value = e.results[0][0].transcript;
+            voiceBtn.classList.remove("recording");
+            handleUserMsg();
+        };
+        recognition.onerror = () => { voiceBtn.classList.remove("recording"); alert("Artikulasi vokal tidak terbaca. Silakan ulangi kembali."); };
+        recognition.onend = () => { voiceBtn.classList.remove("recording"); };
+    } else { voiceBtn.style.display = "none"; }
+
+    function updateDailyTip() {
+        let hour = new Date().getHours();
+        let tip = hour < 11 ? "🌅 Sesi Pagi: Awali interaksi emosional tanpa gawai, bangun komunikasi hangat lewat sarapan bersama." : (hour < 16 ? "☀️ Sesi Siang: Berikan alternatif permainan taktil fisik, batasi durasi gawai maksimal 30-45 menit." : "🌙 Sesi Malam: Amankan gawai minimal 1 jam sebelum jam tidur anak guna menjaga regulasi sekresi hormon melatonin alami.");
+        document.getElementById("dailyTip").innerHTML = `<i class="fas fa-lightbulb" style="color:var(--gold)"></i> <strong>Rekomendasi Sirkadian:</strong><br>${tip}`;
+    }
+    updateDailyTip();
+
+    // ======================== ENGINE TAB 2: LOG HARIAN & ANALISIS MULTIDISIPLIN ========================
+    let weeklyChart = null;
+    function loadLogs() { return JSON.parse(localStorage.getItem(STORAGE_LOGS)) || []; }
+
+    function saveLog(date, duration, mood) {
+        let logs = loadLogs();
+        let idx = logs.findIndex(l => l.date === date);
+        if(idx !== -1) logs[idx] = { date, duration, mood };
+        else logs.push({ date, duration, mood });
+        localStorage.setItem(STORAGE_LOGS, JSON.stringify(logs));
+        renderWeeklyChart();
+        showAktivitasRekomendasi(mood);
+        generateMultidisciplinaryReport(duration, mood);
+    }
+
+    function showAktivitasRekomendasi(mood) {
+        let rekom = "";
+        if(mood === "rewel") rekom = "😠 <strong>Intervensi Tantrum:</strong> Anak membutuhkan penyaluran energi emosi negatif. Alihkan perhatian dari layar melalui permainan sensorik taktil seperti meremas pasir kinetik atau mewarnai gambar.";
+        else if(mood === "lelah") rekom = "😴 <strong>Intervensi Kelelahan:</strong> Reduksi stimulasi visual segera. Hidupkan musik instrumen lembut tanpa tayangan video, berikan usapan menenangkan, atau bacakan cerita narasi pendek.";
+        else if(mood === "biasa") rekom = "😐 <strong>Intervensi Netral:</strong> Rangsang perkembangan fungsi motorik halus lewat permainan menyusun balok, bermain peran, atau menyusun teka-teki gambar terstruktur.";
+        else rekom = "😊 <strong>Kondisi Optimal:</strong> Manfaatkan suasana hati yang baik untuk melakukan eksplorasi gerak fisik luar ruang seperti bermain sepeda, bola, atau olahraga ketangkasan.";
+        
+        const block = document.getElementById("aktivitasRekomendasi");
+        block.innerHTML = `<i class="fas fa-running" style="color:var(--sage)"></i> <strong>Aktivitas Kompensasi Layar:</strong><br>${rekom}`;
+        block.style.display = "block";
+    }
+
+    function generateMultidisciplinaryReport(duration, mood) {
+        const psycho = document.getElementById("nodePsychoText");
+        const medical = document.getElementById("nodeMedicalText");
+        const legal = document.getElementById("nodeLegalText");
+
+        if (duration > 2) {
+            psycho.innerHTML = `Durasi paparan gawai harian senilai <strong>${duration} jam</strong> berpotensi tinggi memicu disfungsi regulasi emosi, memperpendek rentang atensi konsentrasi, serta memicu letupan perilaku temperamental (*tantrum withdrawal*) akibat ketergantungan dopamin digital.`;
+            medical.innerHTML = `Ikatan Dokter Anak Indonesia (IDAI) merekomendasikan pembatasan waktu konsumsi layar maksimal 1-1.5 jam untuk anak usia dini. Kelebihan durasi konstan meningkatkan resiko gangguan refraksi mata (*myopia*), gangguan kualitas tidur esensial, serta keterlambatan bicara (*speech delay*).`;
+            legal.innerHTML = `Sesuai amanat <strong>Pasal 76B UU Perlindungan Anak No. 35/2014</strong>, pembiaran anak terpapar adiksi teknologi tanpa batas pengawasan orang tua dapat dikategorikan sebagai bentuk penelantaran hak tumbuh kembang anak secara mental.`;
+        } else {
+            psycho.innerHTML = `Pola durasi <strong>${duration} jam</strong> tergolong dalam zona aman terkendali. Stabilitas neuro-kognitif anak terjaga dengan baik sepanjang orang tua konsisten mendampingi dan memfilter konten interaktif.`;
+            medical.innerHTML = `Indikator kesehatan fisik anak berada pada kurva normal. Pastikan pemakaian gawai menerapkan prinsip postur tubuh tegak dan jarak pandang minimal 30 cm dari layar gawai.`;
+            legal.innerHTML = `Tindakan proteksi preventif terukur yang Anda lakukan telah memenuhi asas pemenuhan hak perlindungan anak siber sesuai aturan hukum nasional.`;
+        }
+        document.getElementById("multidisciplinaryBox").style.display = "block";
+    }
+
+    function renderWeeklyChart() {
+        let logs = loadLogs();
+        let last7 = getLast7Days();
+        let durations = last7.map(day => { let l = logs.find(l => l.date === day); return l ? l.duration : 0; });
+        
+        const canvas = document.getElementById('weeklyChart');
+        if(!canvas) return;
+        const ctx = canvas.getContext('2d');
+        
+        if(weeklyChart) weeklyChart.destroy();
+        weeklyChart = new Chart(ctx, {
+            type: 'bar',
+            data: { 
+                labels: last7.map(d => d.slice(5)), 
+                datasets: [{ label: 'Waktu Gawai (Jam)', data: durations, backgroundColor: '#1A1A2E', borderRadius: 4 }] 
+            },
+            options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true, max: 4 } } }
+        });
+        
+        let avg = durations.reduce((a,b) => a+b, 0) / 7;
+        let evalHtml = `Rata-rata konsumsi mingguan: <strong>${avg.toFixed(1)} jam/hari</strong>. `;
+        if(avg > 1.5) evalHtml += "<span style='color:var(--rust); font-weight:700;'>⚠️ Di atas ambang rekomendasi medis.</span>";
+        else evalHtml += "<span style='color:var(--sage); font-weight:700;'>🎉 Berada dalam rentang aman.</span>";
+        
+        document.getElementById("weeklyEvaluation").innerHTML = `<div style="font-size:12px; padding:10px; background:var(--cream); border-radius:10px;">${evalHtml}</div>`;
+        if(logs.length > 0) generateMultidisciplinaryReport(avg.toFixed(1), logs[logs.length-1].mood);
+    }
+
+    function getLast7Days() {
+        let days = [];
+        for(let i=6; i>=0; i--) { let d = new Date(); d.setDate(d.getDate()-i); days.push(d.toISOString().slice(0,10)); }
+        return days;
+    }
+
+    document.getElementById("saveLogBtn").addEventListener("click", () => {
+        let date = document.getElementById("logDate").value;
+        let duration = parseFloat(document.getElementById("duration").value);
+        let mood = document.getElementById("mood").value;
+        if(!date || isNaN(duration) || duration < 0) { alert("Harap lengkapi isian data secara valid."); return; }
+        saveLog(date, duration, mood);
+        alert("Log harian terenkripsi secara lokal di perangkat.");
+        document.getElementById("duration").value = "";
+    });
+
+    document.getElementById("exportPDFBtn").addEventListener("click", async () => {
+        const { jsPDF } = window.jspdf;
+        const element = document.getElementById("logScreen");
+        const canvasObj = await html2canvas(element, { scale: 2 });
+        const imgData = canvasObj.toDataURL('image/png');
+        
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        const imgWidth = 190;
+        const imgHeight = (canvasObj.height * imgWidth) / canvasObj.width;
+        
+        pdf.setFont("Helvetica", "bold");
+        pdf.text("LAPORAN KLINIS PENGASUHAN DIGITAL PARENTING", 12, 12);
+        pdf.setFontSize(8);
+        pdf.setFont("Helvetica", "normal");
+        pdf.text(`Arsip Dicetak Pada: ${new Date().toLocaleString('id-ID')}`, 12, 16);
+        pdf.addImage(imgData, 'PNG', 10, 22, imgWidth, imgHeight);
+        pdf.save(`Laporan_Asuh_Compass_${new Date().toISOString().slice(0,10)}.pdf`);
+    });
+
+    // ======================== ENGINE TAB 3: GAMIFIKASI & TOKEN PERILAKU ========================
+    let challengeActive = false;
+    let challengeInterval = null;
+    let endTime = 0;
+
+    function loadBadges() {
+        let badges = JSON.parse(localStorage.getItem(STORAGE_BADGES)) || [];
+        const container = document.getElementById("badgeList");
+        container.innerHTML = badges.length ? "" : "<p style='font-size:12px; color:var(--muted);'>Belum ada tanda penghargaan diraih.</p>";
+        badges.forEach(b => {
+            let div = document.createElement("div");
+            div.className = "badge-token";
+            div.innerHTML = `<i class="fas fa-medal"></i> ${b}`;
             container.appendChild(div);
         });
-        // event listeners
-        document.querySelectorAll('.taskCheckBtn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const id = parseInt(btn.dataset.id);
-                let completedArr = getCompletedArray();
-                if(completedArr.includes(id)) {
-                    completedArr = completedArr.filter(i => i !== id);
-                } else {
-                    completedArr.push(id);
-                }
-                const newState = {};
-                completedArr.forEach(i => newState[i]=true);
-                setCompleted(completedArr);
-                renderHadir();
-                updateHadirProgress();
-                updateHomeStats();
-            });
-        });
-        updateHadirProgress();
     }
 
-    function updateHadirProgress() {
-        const completed = getCompletedArray();
-        const percent = (completed.length / challenges.length) * 100;
-        const fill = document.getElementById('hadirProgressFill');
-        if(fill) fill.style.width = percent + '%';
-        const text = document.getElementById('hadirProgressText');
-        if(text) text.innerText = `${completed.length}/${challenges.length} selesai`;
-    }
-
-    // CERMIN: 4 langkah (state)
-    let cerminStep = 0;
-    let cerminAnswers = { 0: "", 1: "", 2: "", 3: "" };
-    let cerminCompleted = false;
-    const cerminQuestions = [
-        { cat: "MENGENALI", q: "Apa yang paling terasa di hatimu hari ini sebagai orang tua? (satu kata / kalimat pendek)", hint: "Contoh: lelah, bahagia, cemas, haru..." },
-        { cat: "MERASAKAN", q: "Sensasi apa yang muncul di tubuhmu saat mengingat momen itu?", hint: "Sesak, hangat, berat di bahu?" },
-        { cat: "MENGHUBUNGKAN", q: "Apakah perasaan ini membawa memori dari pola masa kecilmu?", hint: "Tanpa menghakimi, cuma amati." },
-        { cat: "MEMILIH", q: "Satu tindakan kecil yang bisa kamu lakukan esok untuk hadir lebih utuh?", hint: "Sekecil apapun itu berharga." }
-    ];
-
-    function renderCermin() {
-        const container = document.getElementById('cerminContainer');
-        if(!container) return;
-        const saved = localStorage.getItem(STORAGE_CERMIN);
-        if(saved && !cerminCompleted) {
-            try {
-                const parsed = JSON.parse(saved);
-                if(parsed.completed) cerminCompleted = true;
-                if(parsed.answers) cerminAnswers = parsed.answers;
-            } catch(e) {}
+    function addBadge(name) {
+        let badges = JSON.parse(localStorage.getItem(STORAGE_BADGES)) || [];
+        if(!badges.includes(name)) {
+            badges.push(name);
+            localStorage.setItem(STORAGE_BADGES, JSON.stringify(badges));
+            loadBadges();
+            alert(`🎉 Lencana Baru Terbuka: ${name}`);
         }
-        if(cerminCompleted) {
-            container.innerHTML = `
-                <div class="card" style="background: var(--cream); text-align: center;">
-                    <i class="fas fa-check-circle" style="font-size: 42px; color: var(--sage); margin-bottom: 12px;"></i>
-                    <h3>Refleksi hari ini selesai</h3>
-                    <p style="margin: 12px 0;">${cerminAnswers[0] ? `"${cerminAnswers[0].substring(0,80)}"` : "Kamu sudah berani bercermin."}</p>
-                    <button id="resetCerminBtn" class="btn-outline" style="margin-top: 12px;">Tulis ulang refleksi</button>
-                </div>
-            `;
-            document.getElementById('resetCerminBtn')?.addEventListener('click', () => {
-                cerminCompleted = false;
-                cerminAnswers = {0:"",1:"",2:"",3:""};
-                cerminStep = 0;
-                localStorage.removeItem(STORAGE_CERMIN);
-                renderCermin();
-            });
+    }
+
+    function updateChallengeTimer() {
+        let remaining = endTime - Date.now();
+        if(remaining <= 0) {
+            clearInterval(challengeInterval);
+            challengeActive = false;
+            localStorage.removeItem("challengeEnd");
+            document.getElementById("timerDisplay").innerHTML = "Misi Sukses! 🎉";
+            addBadge("Pahlawan Bebas Layar 🌟");
             return;
         }
-        const q = cerminQuestions[cerminStep];
-        const currentAns = cerminAnswers[cerminStep] || "";
-        container.innerHTML = `
-            <div class="card">
-                <div style="display: flex; justify-content: space-between; margin-bottom: 12px;"><span style="color: var(--rust); font-weight: bold;">${q.cat}</span><span>${cerminStep+1}/${cerminQuestions.length}</span></div>
-                <p style="font-size: 18px; font-weight: 500; margin-bottom: 20px;">${q.q}</p>
-                <textarea id="cerminInput" rows="4" placeholder="${q.hint}">${currentAns}</textarea>
-                <div style="display: flex; gap: 12px; margin-top: 20px;">
-                    ${cerminStep > 0 ? '<button id="cerminPrev" class="btn-outline">Kembali</button>' : ''}
-                    <button id="cerminNext" class="btn-primary" style="background: var(--navy);">${cerminStep === 3 ? 'Selesai' : 'Lanjut'}</button>
-                </div>
-            </div>
-        `;
-        document.getElementById('cerminNext')?.addEventListener('click', () => {
-            const val = document.getElementById('cerminInput').value;
-            if(!val.trim()) { alert("Tuliskan jawabanmu, ruang ini aman."); return; }
-            cerminAnswers[cerminStep] = val.trim();
-            if(cerminStep === 3) {
-                // simpan
-                const toStore = { answers: cerminAnswers, completed: true, date: new Date().toISOString() };
-                localStorage.setItem(STORAGE_CERMIN, JSON.stringify(toStore));
-                cerminCompleted = true;
-                renderCermin();
-            } else {
-                cerminStep++;
-                renderCermin();
-            }
-        });
-        if(document.getElementById('cerminPrev')) {
-            document.getElementById('cerminPrev').addEventListener('click', () => {
-                cerminStep--;
-                renderCermin();
-            });
-        }
+        let m = Math.floor(remaining / 60000);
+        let s = Math.floor((remaining % 60000) / 1000);
+        document.getElementById("timerDisplay").innerHTML = `⏳ ${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
     }
 
-    // RANTAI
-    function loadRantaiData() {
-        const stored = localStorage.getItem(STORAGE_RANTAI);
-        if(stored) {
-            try {
-                const data = JSON.parse(stored);
-                rantaiData = { ...rantaiData, ...data };
-            } catch(e) {}
-        }
-    }
-    function renderRantai() {
-        loadRantaiData();
-        const container = document.getElementById('rantaiContainer');
-        const nodes = [
-            { key: "leluhur", label: "Kakek / Nenek", era: "1950-1970an", color: "var(--muted)" },
-            { key: "orangtua", label: "Orang Tua", era: "1970-1990an", color: "var(--navy-light)" },
-            { key: "diri", label: "Kamu (Sekarang)", era: "Masa Kini", color: "var(--rust)", highlight: true },
-            { key: "anak", label: "Anakmu", era: "Generasi Berikutnya", color: "var(--sage)" }
-        ];
-        container.innerHTML = '';
-        nodes.forEach((node, idx) => {
-            const div = document.createElement('div');
-            div.className = 'chain-node';
-            div.innerHTML = `
-                <div class="chain-dot" style="border-color: ${node.color}; background: ${node.highlight ? 'var(--rust)' : 'white'}"><span style="font-size:12px;">${idx+1}</span></div>
-                ${idx < nodes.length-1 ? '<div class="chain-line"></div>' : ''}
-                <div class="chain-card ${node.highlight ? 'highlight' : ''}" data-key="${node.key}">
-                    <div style="display:flex; justify-content:space-between;"><span style="font-weight:700;">${node.label}</span><span style="font-size:11px; color:var(--muted)">${node.era}</span></div>
-                    <textarea id="rantai_${node.key}" rows="2" style="margin-top: 10px; font-size:13px;" placeholder="Tulis pola atau pengasuhan yang kamu ingat...">${rantaiData[node.key] || ''}</textarea>
-                </div>
-            `;
-            container.appendChild(div);
-        });
-    }
-    function saveRantaiNotes() {
-        const newData = {};
-        ['leluhur','orangtua','diri','anak'].forEach(k => {
-            const el = document.getElementById(`rantai_${k}`);
-            if(el) newData[k] = el.value;
-        });
-        localStorage.setItem(STORAGE_RANTAI, JSON.stringify(newData));
-        alert('Catatan rantai tersimpan. Kamu sedang memilih untuk memutus mata rantai.');
+    document.getElementById("startChallengeBtn").addEventListener("click", () => {
+        if(challengeActive) { alert("Misi detoksifikasi sirkuit dopamin sedang berjalan."); return; }
+        challengeActive = true;
+        endTime = Date.now() + 3600000;
+        localStorage.setItem("challengeEnd", endTime);
+        challengeInterval = setInterval(updateChallengeTimer, 1000);
+    });
+
+    let savedEnd = localStorage.getItem("challengeEnd");
+    if(savedEnd && Date.now() < parseInt(savedEnd)) {
+        endTime = parseInt(savedEnd);
+        challengeActive = true;
+        challengeInterval = setInterval(updateChallengeTimer, 1000);
     }
 
-    // RUANG (anonim)
-    let ruangPosts = [];
-    function loadRuang() {
-        const stored = localStorage.getItem(STORAGE_RUANG);
-        if(stored) ruangPosts = JSON.parse(stored);
-        else {
-            ruangPosts = [
-                { id: 1, text: "Semalam anakku nangis, aku awalnya marah, lalu sadar itu pola dari orang tuaku. Aku minta maaf sambil memeluknya. Berat, tapi lega.", time: "2 jam lalu", hearts: 12 },
-                { id: 2, text: "Anak usia 13 tahun lebih banyak diam. Aku belajar untuk tidak memberikan solusi, cukup duduk di sampingnya.", time: "kemarin", hearts: 24 },
-                { id: 3, text: "Hari ini aku berhasil menyelesaikan tantangan 'sapaan tanpa gawai'. Anakku tersenyum lebar. Itu cukup.", time: "5 jam lalu", hearts: 37 }
-            ];
-            localStorage.setItem(STORAGE_RUANG, JSON.stringify(ruangPosts));
+    let quizAnswered = false;
+    document.getElementById("jawabanYa").onclick = () => {
+        if(!quizAnswered) {
+            addBadge("Aktivitas Fisik Unggul 🏃");
+            document.getElementById("hasilKuis").innerHTML = "<p style='font-size:12px; color:var(--sage); font-weight:700;'>Lencana Terbuka! Gerak motorik luar ruang merangsang pertumbuhan fungsi kognitif spasial dan kesehatan kardiovaskular anak.</p>";
+            quizAnswered = true;
+            updateHomeStats();
         }
-        renderRuang();
-    }
-    function renderRuang() {
-        const feed = document.getElementById('ruangFeed');
-        if(!feed) return;
-        feed.innerHTML = '';
-        ruangPosts.slice().reverse().forEach(post => {
-            const div = document.createElement('div');
-            div.className = 'card';
-            div.innerHTML = `
-                <div style="display: flex; gap: 12px; align-items: center; margin-bottom: 12px;">
-                    <i class="fas fa-user-circle" style="font-size: 28px; color: var(--muted);"></i>
-                    <div><p style="font-weight:600;">Orang Tua Anonim</p><p style="font-size: 10px; color: var(--muted);">${post.time}</p></div>
-                </div>
-                <p style="font-size: 14px; line-height: 1.6;">${escapeHtml(post.text)}</p>
-                <div style="margin-top: 12px;"><i class="far fa-heart"></i> ${post.hearts} orang merasa terbantu</div>
-            `;
-            feed.appendChild(div);
-        });
-    }
-    function addNewStory(text) {
-        if(!text.trim()) return;
-        const newPost = {
-            id: Date.now(),
-            text: text.trim(),
-            time: "baru saja",
-            hearts: 0
-        };
-        ruangPosts.push(newPost);
-        localStorage.setItem(STORAGE_RUANG, JSON.stringify(ruangPosts));
-        renderRuang();
-    }
-    function escapeHtml(str) { return str.replace(/[&<>]/g, function(m){if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}); }
+    };
+    document.getElementById("jawabanTidak").onclick = () => {
+        if(!quizAnswered) {
+            document.getElementById("hasilKuis").innerHTML = "<p style='font-size:12px; color:var(--rust); font-weight:700;'>Catatan: Minimnya gerak fisik mempercepat kelelahan mata. Agendakan aktivitas fisik esok hari.</p>";
+            quizAnswered = true;
+        }
+    };
 
-    // Home & user
+    // ======================== ENGINE TAB 4: INTERVAL TIMER (POMODORO) ========================
+    let customTimerInterval = null;
+    function startCustomTimer(minutes) {
+        if(customTimerInterval) clearInterval(customTimerInterval);
+        let totalSeconds = minutes * 60;
+        const display = document.getElementById("countdownDisplay");
+        const msg = document.getElementById("timerMessage");
+        
+        function update() {
+            let m = Math.floor(totalSeconds / 60);
+            let s = totalSeconds % 60;
+            display.innerText = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+            if(totalSeconds <= 0) {
+                clearInterval(customTimerInterval);
+                msg.innerText = "⏰ Waktu habis! Ajak anak untuk melakukan peregangan motorik.";
+                display.innerText = "00:00";
+                addBadge("Master Atensi Terstruktur ⏱️");
+                updateHomeStats();
+            } else { totalSeconds--; }
+        }
+        update();
+        customTimerInterval = setInterval(update, 1000);
+        msg.innerText = `Sesi fokus terbimbing berjalan ${minutes} menit.`;
+    }
+
+    document.getElementById("startTimerBtn").addEventListener("click", () => {
+        let mins = parseInt(document.getElementById("customMinutes").value) || 30;
+        if(mins <= 0) return;
+        startCustomTimer(mins);
+    });
+
+    // ======================== SEEDING UTILITY & USER STATS ========================
     let userName = "Orang Tua Hebat";
     function loadUser() {
         const stored = localStorage.getItem(STORAGE_USER);
         if(stored) userName = stored;
         document.getElementById('userNameDisplay').innerText = userName;
     }
+
+    function getCompletedCount() {
+        let count = 0;
+        let badges = JSON.parse(localStorage.getItem(STORAGE_BADGES)) || [];
+        if(badges.includes("Hero Bebas Gawai 🌟") || badges.includes("Pahlawan Bebas Layar 🌟")) count++;
+        if(badges.includes("Aktivitas Fisik Unggul 🏃")) count++;
+        if(badges.includes("Master Atensi Terstruktur ⏱️")) count++;
+        if(loadLogs().length > 0) count++;
+        return count;
+    }
+
     function updateHomeStats() {
-        const completed = getCompletedArray().length;
-        const percent = (completed/challenges.length)*100;
+        let completed = getCompletedCount();
         document.getElementById('homeProgressCount').innerText = completed;
-        document.getElementById('homeProgressFill').style.width = percent+'%';
-    }
-    function setUserName(name) {
-        if(name.trim()) userName = name.trim();
-        else userName = "Orang Tua Hebat";
-        localStorage.setItem(STORAGE_USER, userName);
-        document.getElementById('userNameDisplay').innerText = userName;
+        let percent = (completed / 4) * 100;
+        document.getElementById('homeProgressFill').style.width = percent + '%';
     }
 
-    // Navigation system
-    let currentScreen = 'home';
-    function showScreen(screenId) {
-        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-        const activeScreen = document.getElementById(`${screenId}Screen`);
-        if(activeScreen) activeScreen.classList.add('active');
-        currentScreen = screenId;
-        // update bottom nav active style
-        document.querySelectorAll('.nav-item').forEach(btn => {
-            if(btn.dataset.nav === screenId) btn.classList.add('active');
-            else btn.classList.remove('active');
-        });
-        // header logic
-        const header = document.getElementById('dynamicHeader');
-        if(screenId === 'home') { header.style.display = 'none'; }
-        else {
-            header.style.display = 'flex';
-            const titleMap = { cermin: 'Cermin', hadir: 'Hadir', rantai: 'Rantai', ruang: 'Ruang' };
-            document.getElementById('headerTitle').innerText = titleMap[screenId];
-        }
-        // render konten
-        if(screenId === 'cermin') renderCermin();
-        if(screenId === 'hadir') renderHadir();
-        if(screenId === 'rantai') renderRantai();
-        if(screenId === 'ruang') loadRuang();
-        if(screenId === 'home') updateHomeStats();
-    }
-
-    // Event binding
-    document.getElementById('backHomeBtn')?.addEventListener('click', () => showScreen('home'));
-    document.querySelectorAll('.nav-item, .nav-quick').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            let nav = btn.dataset.nav;
-            if(nav) showScreen(nav);
-        });
-    });
     document.getElementById('editNameBtn')?.addEventListener('click', () => {
-        const newName = prompt("Masukkan nama panggilanmu:", userName);
-        if(newName) setUserName(newName);
-    });
-    document.getElementById('saveRantaiBtn')?.addEventListener('click', saveRantaiNotes);
-    document.getElementById('shareStoryBtn')?.addEventListener('click', () => {
-        const story = document.getElementById('newStoryInput').value;
-        if(story.trim()) { addNewStory(story); document.getElementById('newStoryInput').value = ''; alert('Cerita anonimmu telah menginspirasi.'); }
-        else alert('Tuliskan cerita dulu ya.');
+        const name = prompt("Masukkan nama panggilan Anda:", userName);
+        if(name && name.trim()) {
+            userName = name.trim();
+            localStorage.setItem(STORAGE_USER, userName);
+            document.getElementById('userNameDisplay').innerText = userName;
+        }
     });
 
-    // Set date home
+    // Push Notification Engine Simulation
+    function scheduleCheckin() {
+        if(window.Notification && Notification.permission === "granted") {
+            setInterval(() => {
+                let now = new Date();
+                if(now.getHours() === 20 && now.getMinutes() === 0) {
+                    new Notification("Parenting Compass Pro", { body: "Saatnya waktu refleksi asuh digital malam. Isi log harian gawai buah hati Anda sekarang." });
+                }
+            }, 60000);
+            document.getElementById("checkinStatus").innerHTML = "<i class='fas fa-circle-check'></i> Sinkronisasi terjadwal otomatis aktif pukul 20:00 malam.";
+        }
+    }
+
+    document.getElementById("checkinReminderBtn").addEventListener("click", () => {
+        if(!("Notification" in window)) { alert("Perangkat ini tidak mendukung push notification."); return; }
+        Notification.requestPermission().then(perm => { if(perm === "granted") { scheduleCheckin(); } });
+    });
+
+    // App Initialization
     const options = { weekday: 'long', day: 'numeric', month: 'long' };
     document.getElementById('currentDate').innerText = new Date().toLocaleDateString('id-ID', options);
+    document.getElementById("logDate").valueAsDate = new Date();
+    
     loadUser();
+    loadBadges();
     updateHomeStats();
-    showScreen('home');
+    if(window.Notification && Notification.permission === "granted") scheduleCheckin();
 </script>
 </body>
 </html>

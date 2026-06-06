@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
-    <title>JANGKAR · Ruang Ampuh Hadir untuk Orang Tua</title>
-    <!-- Font & Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <title>JANGKAR · Ruang Hadir untuk Orang Tua</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * {
@@ -14,672 +13,701 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --navy: #1A1A2E;
+            --navy-mid: #2D2D4A;
+            --navy-light: #3D3D5C;
+            --rust: #C84B31;
+            --rust-light: #E06040;
+            --gold: #E8B460;
+            --gold-light: #F0C878;
+            --sage: #7BA99A;
+            --cream: #F5F0E8;
+            --cream-dark: #EDE8E0;
+            --offwhite: #FAF8F5;
+            --muted: #8A8A9A;
+            --white: #FFFFFF;
+        }
+
         body {
-            background: #F4F7FC;
+            background: #0D0D1A;
             font-family: 'Inter', sans-serif;
-            color: #1A2E3F;
-            padding-bottom: 80px;
-        }
-
-        /* mobile-first container */
-        .app-container {
-            max-width: 600px;
-            margin: 0 auto;
-            background: #FFFFFF;
-            min-height: 100vh;
-            box-shadow: 0 0 20px rgba(0,0,0,0.05);
-            position: relative;
-            border-radius: 0;
-            overflow-x: hidden;
-        }
-
-        /* header */
-        .app-header {
-            padding: 24px 20px 16px 20px;
-            background: linear-gradient(135deg, #1C4E6F 0%, #0F3B54 100%);
-            color: white;
-            border-radius: 0 0 28px 28px;
-            box-shadow: 0 6px 14px rgba(0,0,0,0.05);
-        }
-
-        .logo {
+            color: var(--navy);
             display: flex;
+            justify-content: center;
             align-items: center;
-            gap: 10px;
-            font-weight: 700;
-            font-size: 26px;
-            letter-spacing: -0.3px;
+            min-height: 100vh;
+            padding: 24px 16px;
         }
 
-        .logo i {
-            font-size: 32px;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+        /* Phone mockup */
+        .phone {
+            max-width: 390px;
+            width: 100%;
+            background: var(--offwhite);
+            border-radius: 44px;
+            overflow: hidden;
+            box-shadow: 0 40px 60px rgba(0,0,0,0.4), 0 0 0 8px var(--navy), 0 0 0 12px var(--navy-light);
+            position: relative;
         }
 
-        .tagline {
+        /* Status bar */
+        .status-bar {
+            background: var(--navy);
+            padding: 14px 24px 10px;
+            display: flex;
+            justify-content: space-between;
+            color: var(--cream);
             font-size: 14px;
-            opacity: 0.85;
-            margin-top: 8px;
-            font-weight: 400;
-            border-left: 3px solid #FFC107;
-            padding-left: 12px;
+            font-weight: 600;
+            font-family: system-ui, sans-serif;
         }
 
-        .philosophy {
-            margin-top: 16px;
-            background: rgba(255,255,255,0.12);
-            border-radius: 20px;
-            padding: 12px 16px;
-            font-size: 13px;
-            line-height: 1.4;
-            backdrop-filter: blur(2px);
+        /* Bottom navigation */
+        .bottom-nav {
+            background: var(--white);
+            border-top: 1px solid var(--cream-dark);
+            display: flex;
+            padding: 8px 0 20px;
+            backdrop-filter: blur(10px);
         }
 
-        /* konten utama */
-        .main-content {
-            padding: 24px 18px 32px 18px;
+        .nav-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 6px 0;
+            transition: all 0.2s;
+            color: var(--muted);
+            font-size: 10px;
+            font-family: system-ui;
+            font-weight: 500;
         }
 
-        .tab-content {
+        .nav-item.active {
+            color: var(--rust);
+        }
+
+        .nav-item i {
+            font-size: 20px;
+            margin-bottom: 2px;
+        }
+
+        /* Screens */
+        .screen {
             display: none;
-            animation: fadeIn 0.25s ease;
+            animation: fadeIn 0.3s ease;
+            min-height: 650px;
+            max-height: 720px;
+            overflow-y: auto;
+            padding-bottom: 16px;
         }
 
-        .tab-content.active-tab {
+        .screen.active {
             display: block;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(6px);}
-            to { opacity: 1; transform: translateY(0);}
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        /* card style */
+        /* Cards */
         .card {
-            background: #FFFFFF;
-            border-radius: 28px;
+            background: var(--white);
+            border-radius: 24px;
             padding: 20px;
-            margin-bottom: 24px;
-            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.03), 0 2px 4px rgba(0, 0, 0, 0.05);
-            border: 1px solid #E9EDF2;
-            transition: all 0.2s;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            border: 1px solid var(--cream-dark);
         }
 
         .card-title {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 700;
-            margin-bottom: 16px;
             display: flex;
             align-items: center;
             gap: 10px;
-            color: #1C4E6F;
-            border-left: 5px solid #FFC107;
+            margin-bottom: 16px;
+            color: var(--navy);
+            border-left: 4px solid var(--gold);
             padding-left: 14px;
         }
 
-        .card-title i {
-            font-size: 22px;
-            color: #2C7DA0;
-        }
-
-        .question-item {
-            margin-bottom: 18px;
-        }
-
-        .question-item label {
+        .btn-primary {
+            background: var(--navy);
+            color: var(--cream);
+            border: none;
+            padding: 14px 20px;
+            border-radius: 40px;
             font-weight: 600;
-            font-size: 14px;
-            display: block;
-            margin-bottom: 8px;
-            color: #2C3E4E;
+            font-size: 15px;
+            width: 100%;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: 'Inter', sans-serif;
         }
 
-        textarea, input, select {
+        .btn-primary:active {
+            transform: scale(0.97);
+            background: var(--rust);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1.5px solid var(--cream-dark);
+            padding: 10px 16px;
+            border-radius: 40px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        textarea, input {
             width: 100%;
             padding: 14px 16px;
             border-radius: 20px;
-            border: 1.5px solid #E2E8F0;
-            font-family: 'Inter', monospace;
+            border: 1.5px solid var(--cream-dark);
+            font-family: 'Inter', sans-serif;
             font-size: 14px;
-            background: #FEFEFE;
+            background: var(--white);
             transition: 0.2s;
         }
 
         textarea:focus, input:focus {
             outline: none;
-            border-color: #1C4E6F;
-            box-shadow: 0 0 0 3px rgba(28,78,111,0.1);
+            border-color: var(--rust);
+            box-shadow: 0 0 0 3px rgba(200,75,49,0.1);
         }
 
-        button {
-            background: #1C4E6F;
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 40px;
-            font-weight: 600;
-            font-size: 15px;
-            display: inline-flex;
+        /* Custom scroll */
+        .screen::-webkit-scrollbar {
+            width: 4px;
+        }
+        .screen::-webkit-scrollbar-track {
+            background: var(--cream-dark);
+            border-radius: 4px;
+        }
+        .screen::-webkit-scrollbar-thumb {
+            background: var(--sage);
+            border-radius: 4px;
+        }
+
+        /* Progress bar */
+        .progress-bar {
+            height: 6px;
+            background: var(--cream-dark);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: var(--rust);
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        /* Rantai chain */
+        .chain-node {
+            position: relative;
+            padding-left: 40px;
+            margin-bottom: 24px;
+        }
+        .chain-dot {
+            position: absolute;
+            left: 8px;
+            top: 8px;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--cream-dark);
+            border: 2px solid var(--muted);
+            display: flex;
             align-items: center;
-            gap: 10px;
+            justify-content: center;
+            z-index: 2;
+        }
+        .chain-line {
+            position: absolute;
+            left: 21px;
+            top: 36px;
+            bottom: -20px;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--muted), var(--sage));
+            z-index: 1;
+        }
+        .chain-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 14px 16px;
+            border: 1px solid var(--cream-dark);
             cursor: pointer;
             transition: 0.2s;
-            width: auto;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
         }
-
-        button i {
-            font-size: 14px;
-        }
-
-        button:active {
-            transform: scale(0.97);
-            background: #0F3B54;
-        }
-
-        .task-list {
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
-        }
-
-        .task-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 14px;
-            background: #F9FBFD;
-            padding: 14px;
-            border-radius: 24px;
-            border-left: 4px solid #FFC107;
-        }
-
-        .task-check {
-            margin-top: 2px;
-            transform: scale(1.2);
-            accent-color: #1C4E6F;
-        }
-
-        .task-text {
-            flex: 1;
-            font-weight: 500;
-        }
-
-        .task-time {
-            font-size: 12px;
-            color: #5F7F9E;
-            margin-top: 4px;
-        }
-
-        .generation-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .gen-card {
-            background: #F8FAFE;
-            border-radius: 24px;
-            padding: 16px;
-            border: 1px solid #E9EDF2;
-        }
-
-        .gen-title {
-            font-weight: 700;
-            margin-bottom: 12px;
-            font-size: 16px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .story-feed {
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
-            margin-bottom: 28px;
-            max-height: 400px;
-            overflow-y: auto;
-            padding-right: 4px;
-        }
-
-        .story-card {
-            background: #F8FAFE;
-            padding: 16px;
-            border-radius: 24px;
-            border-left: 4px solid #FFC107;
-        }
-
-        .story-date {
-            font-size: 11px;
-            color: #5F7F9E;
-            margin-bottom: 8px;
-        }
-
-        .story-text {
-            font-size: 14px;
-            line-height: 1.45;
-        }
-
-        .principles-note {
-            margin-top: 32px;
-            text-align: center;
-            font-size: 12px;
-            background: #F0F4F9;
-            padding: 16px;
-            border-radius: 28px;
-            color: #2C5A74;
-        }
-
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            max-width: 600px;
-            margin: 0 auto;
-            background: rgba(255,255,255,0.96);
-            backdrop-filter: blur(12px);
-            display: flex;
-            justify-content: space-around;
-            padding: 8px 12px 20px;
-            border-top: 1px solid #E2E8F0;
-            box-shadow: 0 -4px 12px rgba(0,0,0,0.02);
-            z-index: 100;
-        }
-
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-            font-size: 12px;
-            font-weight: 500;
-            color: #8CA3B9;
-            cursor: pointer;
-            transition: 0.2s;
-            padding: 6px 12px;
-            border-radius: 40px;
-        }
-
-        .nav-item i {
-            font-size: 22px;
-        }
-
-        .nav-item.active {
-            color: #1C4E6F;
-            background: #EFF6FA;
-        }
-
-        hr {
-            margin: 20px 0;
-            border: none;
-            border-top: 1px solid #E2E8F0;
-        }
-
-        .small-note {
-            font-size: 12px;
-            color: #6C86A3;
-            margin-top: 12px;
-            text-align: center;
-        }
-
-        button.secondary {
-            background: #EFF6FA;
-            color: #1C4E6F;
-            border: 1px solid #CCDCE9;
-        }
-
-        button.secondary:active {
-            background: #E2ECF3;
+        .chain-card.highlight {
+            border-left: 4px solid var(--rust);
+            background: rgba(200,75,49,0.02);
         }
     </style>
 </head>
 <body>
-<div class="app-container">
-    <div class="app-header">
-        <div class="logo">
-            <i class="fas fa-anchor"></i> 
-            <span>JANGKAR</span>
+<div class="phone">
+    <div class="status-bar">
+        <span>9:41</span>
+        <span><i class="fas fa-signal"></i> <i class="fas fa-battery-full"></i></span>
+    </div>
+
+    <!-- header dinamis (tidak untuk home) -->
+    <div id="dynamicHeader" style="background: var(--offwhite); padding: 12px 20px; border-bottom: 1px solid var(--cream-dark); display: none; align-items: center; gap: 12px;">
+        <button id="backHomeBtn" style="background: none; border: none; cursor: pointer; font-size: 20px; color: var(--navy);"><i class="fas fa-arrow-left"></i></button>
+        <div><i class="fas fa-anchor" style="color: var(--rust); margin-right: 6px;"></i><span style="font-weight: 600; font-size: 13px; letter-spacing: 1px;">JANGKAR · <span id="headerTitle">Cermin</span></span></div>
+    </div>
+
+    <!-- Layar Beranda -->
+    <div id="homeScreen" class="screen active">
+        <div style="background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%); padding: 28px 24px 32px; border-radius: 0 0 32px 32px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                <div>
+                    <p style="color: var(--muted); font-size: 13px; font-family: system-ui;" id="currentDate"></p>
+                    <h1 style="color: var(--cream); font-size: 26px; font-weight: 700; margin: 0;">Halo, <span id="userNameDisplay">Orang Tua Hebat</span> <span style="color: var(--gold);">👋</span></h1>
+                </div>
+                <button id="editNameBtn" style="background: rgba(255,255,255,0.1); border: none; color: var(--gold); padding: 8px 12px; border-radius: 40px; font-size: 12px; cursor: pointer;"><i class="fas fa-pen"></i></button>
+            </div>
+            <p style="color: rgba(245,240,232,0.8); font-size: 14px; margin: 8px 0 0;">Setiap hari hadir adalah pilihan.</p>
+            <div style="background: rgba(255,255,255,0.08); border-radius: 20px; padding: 14px 18px; margin-top: 24px;">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <i class="fas fa-heart" style="color: var(--gold); font-size: 20px;"></i>
+                    <div>
+                        <p style="color: var(--gold); font-weight: 700; font-size: 14px; margin: 0;">Hari ini penuh makna</p>
+                        <p style="color: var(--cream); font-size: 12px; margin: 0;">Kamu sudah menyelesaikan <span id="homeProgressCount">0</span> dari 4 tantangan hadir</p>
+                    </div>
+                </div>
+                <div class="progress-bar" style="margin-top: 12px;"><div class="progress-fill" id="homeProgressFill" style="width: 0%;"></div></div>
+            </div>
         </div>
-        <div class="tagline">tempat aman untuk tumbuh · kehadiran yang memulihkan</div>
-        <div class="philosophy">
-            <i class="fas fa-leaf" style="margin-right: 8px;"></i> Bukan efisiensi, tapi kedalaman. Jangkar adalah metafora <strong>secure base</strong> — pulang untuk berani menjelajah.
+
+        <div style="padding: 24px 20px;">
+            <div class="card" style="background: var(--cream); border-left: 5px solid var(--rust);">
+                <i class="fas fa-quote-left" style="color: var(--gold); margin-bottom: 8px; display: block;"></i>
+                <p style="font-style: italic; font-size: 14px; line-height: 1.6;">"Anak-anak tidak akan ingat mainan mewahmu. Yang mereka ingat adalah saat kamu benar-benar mendengar cerita mereka."</p>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 8px;">
+                <button class="nav-quick btn-primary" data-nav="cermin" style="background: var(--navy);"><i class="fas fa-mirror"></i> Cermin — Refleksi Hari Ini</button>
+                <button class="nav-quick btn-primary" data-nav="hadir" style="background: var(--rust);"><i class="fas fa-hand-peace"></i> Hadir — Tantangan Mikro</button>
+                <button class="nav-quick btn-primary" data-nav="rantai" style="background: var(--sage);"><i class="fas fa-link"></i> Rantai — Peta Lintas Generasi</button>
+                <button class="nav-quick btn-primary" data-nav="ruang" style="background: var(--navy-light);"><i class="fas fa-users"></i> Ruang — Komunitas Anonim</button>
+            </div>
         </div>
     </div>
 
-    <div class="main-content">
-        <!-- CERMIN (Refleksi Harian) -->
-        <div id="cerminView" class="tab-content active-tab">
-            <div class="card">
-                <div class="card-title"><i class="fas fa-mirror"></i> CERMIN · memberi nama pada luka</div>
-                <div class="question-item">
-                    <label>🌱 1. Mengenali — Apa yang paling terasa hari ini? (satu kata / kalimat)</label>
-                    <input type="text" id="cermin_pertanyaan1" placeholder="Misal: lelah, bahagia, campur aduk...">
-                </div>
-                <div class="question-item">
-                    <label>💭 2. Merasakan — Di tubuh/hati, di mana sensasi ini berada?</label>
-                    <textarea id="cermin_pertanyaan2" rows="2" placeholder="Dadaku sesak, pundak tegang, atau hangat..."></textarea>
-                </div>
-                <div class="question-item">
-                    <label>🔗 3. Menghubungkan — Apakah ini membawa memori masa kecil atau pola tertentu?</label>
-                    <textarea id="cermin_pertanyaan3" rows="2" placeholder="Saya ingat ketika kecil, ibu saya juga..."></textarea>
-                </div>
-                <div class="question-item">
-                    <label>⚓ 4. Memilih — Satu tindakan kecil hadir untuk esok hari?</label>
-                    <input type="text" id="cermin_pertanyaan4" placeholder="Contoh: mendengar tanpa menyela 3 menit">
-                </div>
-                <button id="simpanCerminBtn"><i class="fas fa-save"></i> Simpan refleksi hari ini</button>
-                <div class="small-note" id="cerminStatus">✨ Refleksi tersimpan secara pribadi & terenkripsi (lokal)</div>
-            </div>
-            <div class="card">
-                <div class="card-title"><i class="fas fa-history"></i> catatan terakhir</div>
-                <div id="cerminPreview" style="font-size: 14px; color: #2E4A6A;">Belum ada refleksi. Mulai dari yang kecil.</div>
-            </div>
+    <!-- CERMIN SCREEN -->
+    <div id="cerminScreen" class="screen">
+        <div style="background: var(--navy); padding: 20px 24px 28px;">
+            <h2 style="color: var(--cream); font-size: 24px; margin: 0 0 4px;"><i class="fas fa-mirror"></i> Cermin</h2>
+            <p style="color: rgba(245,240,232,0.7); font-size: 13px;">Berlaku jujur pada luka yang tak punya nama</p>
         </div>
+        <div style="padding: 20px;" id="cerminContainer"></div>
+    </div>
 
-        <!-- HADIR (Tantangan mikro-kehadiran) -->
-        <div id="hadirView" class="tab-content">
-            <div class="card">
-                <div class="card-title"><i class="fas fa-hand-peace"></i> HADIR · tantangan kecil, dampak besar</div>
-                <div class="task-list" id="taskContainer"></div>
-                <div class="small-note" id="hadirFeedback">✔️ Centang saat berhasil menyelesaikan hari ini. Setiap momen berarti.</div>
-            </div>
+    <!-- HADIR SCREEN -->
+    <div id="hadirScreen" class="screen">
+        <div style="background: linear-gradient(135deg, var(--rust) 0%, var(--rust-light) 100%); padding: 20px 24px 28px;">
+            <h2 style="color: white; font-size: 24px; margin: 0 0 4px;"><i class="fas fa-heart"></i> Hadir</h2>
+            <p style="color: rgba(255,255,240,0.9);">4 momen kecil, dampak besar</p>
+            <div class="progress-bar" style="margin-top: 16px;"><div class="progress-fill" id="hadirProgressFill" style="width: 0%; background: var(--gold);"></div></div>
+            <p style="color: white; font-size: 12px; margin-top: 6px;" id="hadirProgressText">0/4 selesai</p>
         </div>
+        <div style="padding: 20px;" id="hadirTasksContainer"></div>
+    </div>
 
-        <!-- RANTAI (Peta lintas generasi) -->
-        <div id="rantaiView" class="tab-content">
-            <div class="card">
-                <div class="card-title"><i class="fas fa-link"></i> RANTAI · melihat warisan, memilih berbeda</div>
-                <div class="generation-grid">
-                    <div class="gen-card">
-                        <div class="gen-title"><i class="fas fa-tree"></i> Generasi Leluhur (Kakek/Nenek)</div>
-                        <textarea id="rantai_leluhur" rows="2" placeholder="Apa pola yang saya ingat? (misal: disiplin keras, atau hangat, atau jarang bicara)"></textarea>
-                    </div>
-                    <div class="gen-card">
-                        <div class="gen-title"><i class="fas fa-users"></i> Generasi Orang Tua</div>
-                        <textarea id="rantai_ortu" rows="2" placeholder="Nilai yang saya terima dari mereka..."></textarea>
-                    </div>
-                    <div class="gen-card">
-                        <div class="gen-title"><i class="fas fa-child"></i> Generasi Saya (pola saat ini)</div>
-                        <textarea id="rantai_saya" rows="2" placeholder="Hal yang ingin saya teruskan / ubah..."></textarea>
-                    </div>
-                </div>
-                <button id="simpanRantaiBtn"><i class="fas fa-chain-broken"></i> Simpan peta rantai</button>
-                <div class="small-note" id="rantaiStatus">Menyadari rantai = kekuatan memilih. Bukan menyalahkan.</div>
-            </div>
+    <!-- RANTAI SCREEN -->
+    <div id="rantaiScreen" class="screen">
+        <div style="background: var(--navy); padding: 20px 24px 28px;">
+            <h2 style="color: var(--cream); font-size: 24px; margin: 0 0 4px;"><i class="fas fa-link"></i> Rantai</h2>
+            <p style="color: rgba(245,240,232,0.7);">Lihat warisan, lalu pilih untuk memutus atau merangkul</p>
         </div>
+        <div style="padding: 20px;" id="rantaiContainer"></div>
+        <div style="padding: 0 20px 24px;"><button id="saveRantaiBtn" class="btn-primary" style="background: var(--sage);">Simpan catatan rantai</button></div>
+    </div>
 
-        <!-- RUANG (Komunitas anonim) -->
-        <div id="ruangView" class="tab-content">
-            <div class="card">
-                <div class="card-title"><i class="fas fa-comments"></i> RUANG · anonim, tanpa nama, tanpa foto</div>
-                <div id="anonymousFeed" class="story-feed"></div>
-                <textarea id="newStoryInput" rows="3" placeholder="Bagikan keresahan, kemenangan kecil, atau pertanyaan ... (100% anonim)"></textarea>
-                <button id="shareStoryBtn" style="margin-top: 12px;"><i class="fas fa-paper-plane"></i> Bagikan cerita</button>
-                <div class="small-note">🔒 Terenkripsi secara lokal, tidak ada identitas, hanya ruang untuk berbagi.</div>
-            </div>
+    <!-- RUANG SCREEN -->
+    <div id="ruangScreen" class="screen">
+        <div style="background: var(--navy); padding: 20px 24px 28px;">
+            <h2 style="color: var(--cream); font-size: 24px; margin: 0 0 4px;"><i class="fas fa-leaf"></i> Ruang</h2>
+            <p style="color: rgba(245,240,232,0.7);">Tanpa nama, tanpa foto. Hanya cerita.</p>
         </div>
-
-        <!-- prinsip pembeda (konsisten) -->
-        <div class="principles-note">
-            <i class="fas fa-shield-alt"></i> Bukan alat produktivitas — Tidak ada leaderboard, streak, atau notifikasi agresif.<br>
-            🧭 Dirancang untuk memperlambat dan menjadi jangkar dalam relasi.
+        <div style="padding: 20px;" id="ruangFeed"></div>
+        <div style="padding: 0 20px 24px;">
+            <textarea id="newStoryInput" rows="3" placeholder="Ceritakan keresahan, kemenangan kecil, atau pertanyaan... (100% anonim)" style="margin-bottom: 12px;"></textarea>
+            <button id="shareStoryBtn" class="btn-primary" style="background: var(--navy);"><i class="fas fa-paper-plane"></i> Bagikan secara anonim</button>
         </div>
     </div>
 
     <div class="bottom-nav">
-        <div class="nav-item" data-tab="cermin"><i class="fas fa-mirror"></i><span>Cermin</span></div>
-        <div class="nav-item" data-tab="hadir"><i class="fas fa-hand-sparkles"></i><span>Hadir</span></div>
-        <div class="nav-item" data-tab="rantai"><i class="fas fa-link"></i><span>Rantai</span></div>
-        <div class="nav-item" data-tab="ruang"><i class="fas fa-leaf"></i><span>Ruang</span></div>
+        <button class="nav-item" data-nav="home"><i class="fas fa-home"></i><span>Beranda</span></button>
+        <button class="nav-item" data-nav="cermin"><i class="fas fa-mirror"></i><span>Cermin</span></button>
+        <button class="nav-item" data-nav="hadir"><i class="fas fa-heart"></i><span>Hadir</span></button>
+        <button class="nav-item" data-nav="rantai"><i class="fas fa-link"></i><span>Rantai</span></button>
+        <button class="nav-item" data-nav="ruang"><i class="fas fa-users"></i><span>Ruang</span></button>
     </div>
 </div>
 
 <script>
-    (function() {
-        // ---------- STORAGE KEYS ----------
-        const STORAGE_CERMIN = "jangkar_cermin_refleksi";
-        const STORAGE_HADIR_TASKS = "jangkar_hadir_checklist";
-        const STORAGE_RANTAI = "jangkar_rantai_data";
-        const STORAGE_RUANG_POSTS = "jangkar_ruang_posts";
+    // ---------------------- STORAGE KEYS --------------------------
+    const STORAGE_USER = "jangkar_user";
+    const STORAGE_CERMIN = "jangkar_cermin_last";
+    const STORAGE_HADIR = "jangkar_hadir_daily";
+    const STORAGE_RANTAI = "jangkar_rantai_notes";
+    const STORAGE_RUANG = "jangkar_ruang_posts";
 
-        // ---------- Data awal ----------
-        let currentTab = "cermin";
+    // Data default rantai (pola)
+    let rantaiData = {
+        leluhur: "Kakek nenek bekerja keras, jarang di rumah, cinta ditunjukkan dengan memberi nafkah.",
+        orangtua: "Hadir fisik tapi emosional tertutup. Sering membandingkan dengan anak lain.",
+        diri: "Saya menyadari pola marah yang mirip, tapi saya mulai belajar hadir.",
+        anak: "Generasi baru. Masih bisa dibentuk dengan kehadiran sejati."
+    };
 
-        // TANTANGAN HADIR (4 waktu)
-        const TASKS = [
-            { id: "pagi", label: "🌅 PAGI · 2 menit sapaan tanpa agenda", desc: "Sebelum memegang gawai, tatap mata anak & ucapkan 'selamat pagi' dengan hadir penuh." },
-            { id: "siang", label: "🌞 SIANG · Makan bersama tanpa layar", desc: "Hanya 5 menit mendengarkan cerita kecil anak tanpa menyela." },
-            { id: "sore", label: "🍂 SORE · Aktivitas bersama", desc: "Libatkan anak dalam kegiatan sederhana (melipat baju/bermain) dengan sepenuh hati." },
-            { id: "malam", label: "🌙 MALAM · Cerita dan pelukan", desc: "2 menit bercerita tentang momen favorit hari ini sambil memeluk." }
-        ];
+    // Tantangan Hadir
+    const challenges = [
+        { id: 0, time: "🌅 Pagi", title: "Sapaan Tanpa Gawai", desc: "Sebelum memegang HP, tatap mata anak & ucapkan selamat pagi dengan sepenuh hati.", duration: "2 menit" },
+        { id: 1, time: "☀️ Siang", title: "Pesan Suara Hangat", desc: "Kirim pesan suara (bukan teks) ke anak, cukup 'Ayah/ibu kangen kamu'.", duration: "1 menit" },
+        { id: 2, time: "🌤️ Sore", title: "Duduk Bersama Tanpa Agenda", desc: "Duduk 5 menit di samping anak tanpa bertanya PR atau memberi nasihat.", duration: "5 menit" },
+        { id: 3, time: "🌙 Malam", title: "Satu Pertanyaan Nyata", desc: "Tanya: 'Hari ini apa yang paling membuatmu tersenyum?' Lalu dengarkan tanpa interupsi.", duration: "10 menit" }
+    ];
 
-        // fungsi helper: simpan & load cermin
-        function loadCerminToForm() {
-            const saved = localStorage.getItem(STORAGE_CERMIN);
-            if(saved) {
-                try {
-                    const data = JSON.parse(saved);
-                    document.getElementById('cermin_pertanyaan1').value = data.q1 || '';
-                    document.getElementById('cermin_pertanyaan2').value = data.q2 || '';
-                    document.getElementById('cermin_pertanyaan3').value = data.q3 || '';
-                    document.getElementById('cermin_pertanyaan4').value = data.q4 || '';
-                    const previewHtml = `<i class="fas fa-clock"></i> Terakhir: ${data.date || ''}<br><strong>“${data.q1?.substring(0, 70) || '...'}”</strong> — ${data.q4 ? 'satu pilihan: '+data.q4.substring(0,60) : 'simpan lebih lanjut'}`;
-                    document.getElementById('cerminPreview').innerHTML = previewHtml;
-                } catch(e) {}
-            } else {
-                document.getElementById('cerminPreview').innerHTML = 'Belum ada refleksi. Tulislah keresahan & harapan.';
-            }
-        }
+    // Helper: get today key
+    function getTodayKey() { return new Date().toISOString().slice(0,10); }
 
-        function saveCermin() {
-            const q1 = document.getElementById('cermin_pertanyaan1').value;
-            const q2 = document.getElementById('cermin_pertanyaan2').value;
-            const q3 = document.getElementById('cermin_pertanyaan3').value;
-            const q4 = document.getElementById('cermin_pertanyaan4').value;
-            const data = {
-                q1, q2, q3, q4,
-                date: new Date().toLocaleString('id-ID')
-            };
-            localStorage.setItem(STORAGE_CERMIN, JSON.stringify(data));
-            loadCerminToForm();
-            const statusDiv = document.getElementById('cerminStatus');
-            statusDiv.innerHTML = '✅ Tersimpan. Hanya Anda yang bisa membaca.';
-            setTimeout(() => { if(statusDiv) statusDiv.innerHTML = '✨ Refleksi tersimpan secara pribadi & terenkripsi (lokal)'; }, 2000);
-        }
+    // Load/Save Hadir
+    function loadHadirState() {
+        const stored = localStorage.getItem(STORAGE_HADIR);
+        const all = stored ? JSON.parse(stored) : {};
+        const today = getTodayKey();
+        return all[today] || {};
+    }
+    function saveHadirState(completedArr) {
+        const stored = localStorage.getItem(STORAGE_HADIR);
+        const all = stored ? JSON.parse(stored) : {};
+        const today = getTodayKey();
+        all[today] = completedArr;
+        localStorage.setItem(STORAGE_HADIR, JSON.stringify(all));
+    }
+    function getCompletedArray() {
+        const state = loadHadirState();
+        const arr = [];
+        for(let i=0; i<challenges.length; i++) if(state[i]) arr.push(i);
+        return arr;
+    }
+    function setCompleted(ids) {
+        const todayState = {};
+        ids.forEach(id => todayState[id]=true);
+        const stored = localStorage.getItem(STORAGE_HADIR);
+        const all = stored ? JSON.parse(stored) : {};
+        all[getTodayKey()] = todayState;
+        localStorage.setItem(STORAGE_HADIR, JSON.stringify(all));
+    }
 
-        // ---------- HADIR: daily checklist (per tanggal) ----------
-        function getTodayKey() {
-            return new Date().toISOString().slice(0,10);
-        }
-
-        function loadHadirState() {
-            const today = getTodayKey();
-            const stored = localStorage.getItem(STORAGE_HADIR_TASKS);
-            let allData = {};
-            if(stored) allData = JSON.parse(stored);
-            const todayData = allData[today] || {};
-
-            const container = document.getElementById('taskContainer');
-            container.innerHTML = '';
-            TASKS.forEach(task => {
-                const checked = todayData[task.id] === true;
-                const taskDiv = document.createElement('div');
-                taskDiv.className = 'task-item';
-                taskDiv.innerHTML = `
-                    <input type="checkbox" class="task-check" data-task-id="${task.id}" ${checked ? 'checked' : ''}>
-                    <div class="task-text">
-                        <strong>${task.label}</strong><br>
-                        <span class="task-time">${task.desc}</span>
+    // Render Hadir UI
+    function renderHadir() {
+        const completed = getCompletedArray();
+        const container = document.getElementById('hadirTasksContainer');
+        if(!container) return;
+        container.innerHTML = '';
+        challenges.forEach(ch => {
+            const isDone = completed.includes(ch.id);
+            const div = document.createElement('div');
+            div.className = 'card';
+            div.style.borderLeft = isDone ? `4px solid var(--sage)` : '4px solid var(--gold-light)';
+            div.innerHTML = `
+                <div style="display: flex; justify-content: space-between; align-items: start;">
+                    <div>
+                        <p style="font-size: 12px; color: var(--muted); margin-bottom: 6px;">${ch.time} · ${ch.duration}</p>
+                        <h4 style="margin-bottom: 8px;">${ch.title}</h4>
+                        <p style="font-size: 13px; color: var(--navy-light);">${ch.desc}</p>
                     </div>
-                `;
-                container.appendChild(taskDiv);
-            });
-            // attach event listeners
-            document.querySelectorAll('.task-check').forEach(chk => {
-                chk.addEventListener('change', function(e) {
-                    const taskId = this.getAttribute('data-task-id');
-                    const todayKey = getTodayKey();
-                    let storedAll = localStorage.getItem(STORAGE_HADIR_TASKS);
-                    let parsed = storedAll ? JSON.parse(storedAll) : {};
-                    if(!parsed[todayKey]) parsed[todayKey] = {};
-                    parsed[todayKey][taskId] = this.checked;
-                    localStorage.setItem(STORAGE_HADIR_TASKS, JSON.stringify(parsed));
-                    const feedDiv = document.getElementById('hadirFeedback');
-                    feedDiv.innerHTML = '✔️ Tantangan tercatat. Hadir kecil, dampak besar.';
-                    setTimeout(() => { if(feedDiv) feedDiv.innerHTML = '✔️ Centang saat berhasil menyelesaikan hari ini. Setiap momen berarti.'; }, 1500);
-                });
-            });
-        }
-
-        // ---------- RANTAI ----------
-        function loadRantai() {
-            const saved = localStorage.getItem(STORAGE_RANTAI);
-            if(saved) {
-                try {
-                    const data = JSON.parse(saved);
-                    document.getElementById('rantai_leluhur').value = data.leluhur || '';
-                    document.getElementById('rantai_ortu').value = data.ortu || '';
-                    document.getElementById('rantai_saya').value = data.saya || '';
-                } catch(e) {}
-            }
-        }
-
-        function saveRantai() {
-            const leluhur = document.getElementById('rantai_leluhur').value;
-            const ortu = document.getElementById('rantai_ortu').value;
-            const saya = document.getElementById('rantai_saya').value;
-            const data = { leluhur, ortu, saya, updated: new Date().toISOString() };
-            localStorage.setItem(STORAGE_RANTAI, JSON.stringify(data));
-            const status = document.getElementById('rantaiStatus');
-            status.innerHTML = '✓ Rantai tersimpan. Kamu bisa memilih warisan yang ingin diubah.';
-            setTimeout(() => { if(status) status.innerHTML = 'Menyadari rantai = kekuatan memilih. Bukan menyalahkan.'; }, 2000);
-        }
-
-        // ---------- RUANG (anonim) ----------
-        function loadRuangFeed() {
-            const stored = localStorage.getItem(STORAGE_RUANG_POSTS);
-            let posts = [];
-            if(stored) {
-                try { posts = JSON.parse(stored); } catch(e){}
-            }
-            if(posts.length === 0) {
-                // seeding cerita contoh
-                posts = [
-                    { id: Date.now()+1, text: "Hari ini teriakan saya meledak lagi. Tapi setelahnya saya memeluk anak & minta maaf. Saya sedang belajar.", date: "2 hari lalu" },
-                    { id: Date.now()+2, text: "Saya sadar pola marah saya sama seperti ayah dulu. Tapi saya memilih berhenti. Mulai dengan menarik napas.", date: "kemarin" },
-                ];
-                localStorage.setItem(STORAGE_RUANG_POSTS, JSON.stringify(posts));
-            }
-            renderFeed(posts);
-        }
-
-        function renderFeed(posts) {
-            const feedContainer = document.getElementById('anonymousFeed');
-            feedContainer.innerHTML = '';
-            if(posts.length === 0) {
-                feedContainer.innerHTML = '<div class="story-card" style="text-align:center;">Belum ada cerita, jadilah yang pertama berbagi.</div>';
-                return;
-            }
-            posts.slice().reverse().forEach(post => {
-                const div = document.createElement('div');
-                div.className = 'story-card';
-                div.innerHTML = `
-                    <div class="story-date"><i class="far fa-clock"></i> ${post.date || 'Baru saja'}</div>
-                    <div class="story-text">“${escapeHtml(post.text)}”</div>
-                `;
-                feedContainer.appendChild(div);
-            });
-        }
-
-        function escapeHtml(str) {
-            if(!str) return '';
-            return str.replace(/[&<>]/g, function(m) {
-                if(m === '&') return '&amp;';
-                if(m === '<') return '&lt;';
-                if(m === '>') return '&gt;';
-                return m;
-            }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
-                return c;
-            });
-        }
-
-        function addNewStory(text) {
-            if(!text.trim()) return false;
-            const stored = localStorage.getItem(STORAGE_RUANG_POSTS);
-            let posts = stored ? JSON.parse(stored) : [];
-            const newPost = {
-                id: Date.now(),
-                text: text.trim(),
-                date: new Date().toLocaleString('id-ID', {hour: '2-digit', minute:'2-digit', day:'numeric', month:'short'})
-            };
-            posts.push(newPost);
-            localStorage.setItem(STORAGE_RUANG_POSTS, JSON.stringify(posts));
-            renderFeed(posts);
-            return true;
-        }
-
-        // ----- Tab Navigation -----
-        function switchTab(tabId) {
-            currentTab = tabId;
-            // hidden all content
-            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active-tab'));
-            const activeDiv = document.getElementById(`${tabId}View`);
-            if(activeDiv) activeDiv.classList.add('active-tab');
-            // update nav style
-            document.querySelectorAll('.nav-item').forEach(item => {
-                const itemTab = item.getAttribute('data-tab');
-                if(itemTab === tabId) item.classList.add('active');
-                else item.classList.remove('active');
-            });
-
-            // load data spesifik saat tab dibuka (memastikan data terbaru)
-            if(tabId === 'cermin') loadCerminToForm();
-            if(tabId === 'hadir') loadHadirState();
-            if(tabId === 'rantai') loadRantai();
-            if(tabId === 'ruang') loadRuangFeed();
-        }
-
+                    <button class="taskCheckBtn" data-id="${ch.id}" style="background: ${isDone ? 'var(--sage)' : 'var(--cream-dark)'}; border: none; width: 36px; height: 36px; border-radius: 50%; color: white; cursor: pointer;">
+                        ${isDone ? '<i class="fas fa-check"></i>' : '<i class="far fa-circle"></i>'}
+                    </button>
+                </div>
+            `;
+            container.appendChild(div);
+        });
         // event listeners
-        function bindEvents() {
-            document.querySelectorAll('.nav-item').forEach(nav => {
-                nav.addEventListener('click', (e) => {
-                    const tab = nav.getAttribute('data-tab');
-                    if(tab) switchTab(tab);
-                });
+        document.querySelectorAll('.taskCheckBtn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const id = parseInt(btn.dataset.id);
+                let completedArr = getCompletedArray();
+                if(completedArr.includes(id)) {
+                    completedArr = completedArr.filter(i => i !== id);
+                } else {
+                    completedArr.push(id);
+                }
+                const newState = {};
+                completedArr.forEach(i => newState[i]=true);
+                setCompleted(completedArr);
+                renderHadir();
+                updateHadirProgress();
+                updateHomeStats();
             });
-            document.getElementById('simpanCerminBtn')?.addEventListener('click', saveCermin);
-            document.getElementById('simpanRantaiBtn')?.addEventListener('click', saveRantai);
-            const shareBtn = document.getElementById('shareStoryBtn');
-            if(shareBtn) {
-                shareBtn.addEventListener('click', () => {
-                    const storyText = document.getElementById('newStoryInput').value;
-                    if(storyText.trim() === "") {
-                        alert("Tuliskan cerita anonim dulu ya, ruang ini untuk berbagi.");
-                        return;
-                    }
-                    addNewStory(storyText);
-                    document.getElementById('newStoryInput').value = '';
-                    const feedMsg = document.getElementById('ruangView')?.querySelector('.small-note');
-                    if(feedMsg) feedMsg.innerHTML = '✓ Cerita tersimpan. Terima kasih telah berbagi dalam keamanan.';
-                    setTimeout(() => { if(feedMsg) feedMsg.innerHTML = '🔒 Terenkripsi secara lokal, tidak ada identitas, hanya ruang untuk berbagi.'; }, 2000);
-                });
+        });
+        updateHadirProgress();
+    }
+
+    function updateHadirProgress() {
+        const completed = getCompletedArray();
+        const percent = (completed.length / challenges.length) * 100;
+        const fill = document.getElementById('hadirProgressFill');
+        if(fill) fill.style.width = percent + '%';
+        const text = document.getElementById('hadirProgressText');
+        if(text) text.innerText = `${completed.length}/${challenges.length} selesai`;
+    }
+
+    // CERMIN: 4 langkah (state)
+    let cerminStep = 0;
+    let cerminAnswers = { 0: "", 1: "", 2: "", 3: "" };
+    let cerminCompleted = false;
+    const cerminQuestions = [
+        { cat: "MENGENALI", q: "Apa yang paling terasa di hatimu hari ini sebagai orang tua? (satu kata / kalimat pendek)", hint: "Contoh: lelah, bahagia, cemas, haru..." },
+        { cat: "MERASAKAN", q: "Sensasi apa yang muncul di tubuhmu saat mengingat momen itu?", hint: "Sesak, hangat, berat di bahu?" },
+        { cat: "MENGHUBUNGKAN", q: "Apakah perasaan ini membawa memori dari pola masa kecilmu?", hint: "Tanpa menghakimi, cuma amati." },
+        { cat: "MEMILIH", q: "Satu tindakan kecil yang bisa kamu lakukan esok untuk hadir lebih utuh?", hint: "Sekecil apapun itu berharga." }
+    ];
+
+    function renderCermin() {
+        const container = document.getElementById('cerminContainer');
+        if(!container) return;
+        const saved = localStorage.getItem(STORAGE_CERMIN);
+        if(saved && !cerminCompleted) {
+            try {
+                const parsed = JSON.parse(saved);
+                if(parsed.completed) cerminCompleted = true;
+                if(parsed.answers) cerminAnswers = parsed.answers;
+            } catch(e) {}
+        }
+        if(cerminCompleted) {
+            container.innerHTML = `
+                <div class="card" style="background: var(--cream); text-align: center;">
+                    <i class="fas fa-check-circle" style="font-size: 42px; color: var(--sage); margin-bottom: 12px;"></i>
+                    <h3>Refleksi hari ini selesai</h3>
+                    <p style="margin: 12px 0;">${cerminAnswers[0] ? `"${cerminAnswers[0].substring(0,80)}"` : "Kamu sudah berani bercermin."}</p>
+                    <button id="resetCerminBtn" class="btn-outline" style="margin-top: 12px;">Tulis ulang refleksi</button>
+                </div>
+            `;
+            document.getElementById('resetCerminBtn')?.addEventListener('click', () => {
+                cerminCompleted = false;
+                cerminAnswers = {0:"",1:"",2:"",3:""};
+                cerminStep = 0;
+                localStorage.removeItem(STORAGE_CERMIN);
+                renderCermin();
+            });
+            return;
+        }
+        const q = cerminQuestions[cerminStep];
+        const currentAns = cerminAnswers[cerminStep] || "";
+        container.innerHTML = `
+            <div class="card">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 12px;"><span style="color: var(--rust); font-weight: bold;">${q.cat}</span><span>${cerminStep+1}/${cerminQuestions.length}</span></div>
+                <p style="font-size: 18px; font-weight: 500; margin-bottom: 20px;">${q.q}</p>
+                <textarea id="cerminInput" rows="4" placeholder="${q.hint}">${currentAns}</textarea>
+                <div style="display: flex; gap: 12px; margin-top: 20px;">
+                    ${cerminStep > 0 ? '<button id="cerminPrev" class="btn-outline">Kembali</button>' : ''}
+                    <button id="cerminNext" class="btn-primary" style="background: var(--navy);">${cerminStep === 3 ? 'Selesai' : 'Lanjut'}</button>
+                </div>
+            </div>
+        `;
+        document.getElementById('cerminNext')?.addEventListener('click', () => {
+            const val = document.getElementById('cerminInput').value;
+            if(!val.trim()) { alert("Tuliskan jawabanmu, ruang ini aman."); return; }
+            cerminAnswers[cerminStep] = val.trim();
+            if(cerminStep === 3) {
+                // simpan
+                const toStore = { answers: cerminAnswers, completed: true, date: new Date().toISOString() };
+                localStorage.setItem(STORAGE_CERMIN, JSON.stringify(toStore));
+                cerminCompleted = true;
+                renderCermin();
+            } else {
+                cerminStep++;
+                renderCermin();
             }
+        });
+        if(document.getElementById('cerminPrev')) {
+            document.getElementById('cerminPrev').addEventListener('click', () => {
+                cerminStep--;
+                renderCermin();
+            });
         }
+    }
 
-        // inisialisasi awal
-        function init() {
-            bindEvents();
-            // load data awal
-            loadCerminToForm();
-            loadHadirState();
-            loadRantai();
-            loadRuangFeed();
-            switchTab('cermin');
+    // RANTAI
+    function loadRantaiData() {
+        const stored = localStorage.getItem(STORAGE_RANTAI);
+        if(stored) {
+            try {
+                const data = JSON.parse(stored);
+                rantaiData = { ...rantaiData, ...data };
+            } catch(e) {}
         }
+    }
+    function renderRantai() {
+        loadRantaiData();
+        const container = document.getElementById('rantaiContainer');
+        const nodes = [
+            { key: "leluhur", label: "Kakek / Nenek", era: "1950-1970an", color: "var(--muted)" },
+            { key: "orangtua", label: "Orang Tua", era: "1970-1990an", color: "var(--navy-light)" },
+            { key: "diri", label: "Kamu (Sekarang)", era: "Masa Kini", color: "var(--rust)", highlight: true },
+            { key: "anak", label: "Anakmu", era: "Generasi Berikutnya", color: "var(--sage)" }
+        ];
+        container.innerHTML = '';
+        nodes.forEach((node, idx) => {
+            const div = document.createElement('div');
+            div.className = 'chain-node';
+            div.innerHTML = `
+                <div class="chain-dot" style="border-color: ${node.color}; background: ${node.highlight ? 'var(--rust)' : 'white'}"><span style="font-size:12px;">${idx+1}</span></div>
+                ${idx < nodes.length-1 ? '<div class="chain-line"></div>' : ''}
+                <div class="chain-card ${node.highlight ? 'highlight' : ''}" data-key="${node.key}">
+                    <div style="display:flex; justify-content:space-between;"><span style="font-weight:700;">${node.label}</span><span style="font-size:11px; color:var(--muted)">${node.era}</span></div>
+                    <textarea id="rantai_${node.key}" rows="2" style="margin-top: 10px; font-size:13px;" placeholder="Tulis pola atau pengasuhan yang kamu ingat...">${rantaiData[node.key] || ''}</textarea>
+                </div>
+            `;
+            container.appendChild(div);
+        });
+    }
+    function saveRantaiNotes() {
+        const newData = {};
+        ['leluhur','orangtua','diri','anak'].forEach(k => {
+            const el = document.getElementById(`rantai_${k}`);
+            if(el) newData[k] = el.value;
+        });
+        localStorage.setItem(STORAGE_RANTAI, JSON.stringify(newData));
+        alert('Catatan rantai tersimpan. Kamu sedang memilih untuk memutus mata rantai.');
+    }
 
-        init();
-    })();
+    // RUANG (anonim)
+    let ruangPosts = [];
+    function loadRuang() {
+        const stored = localStorage.getItem(STORAGE_RUANG);
+        if(stored) ruangPosts = JSON.parse(stored);
+        else {
+            ruangPosts = [
+                { id: 1, text: "Semalam anakku nangis, aku awalnya marah, lalu sadar itu pola dari orang tuaku. Aku minta maaf sambil memeluknya. Berat, tapi lega.", time: "2 jam lalu", hearts: 12 },
+                { id: 2, text: "Anak usia 13 tahun lebih banyak diam. Aku belajar untuk tidak memberikan solusi, cukup duduk di sampingnya.", time: "kemarin", hearts: 24 },
+                { id: 3, text: "Hari ini aku berhasil menyelesaikan tantangan 'sapaan tanpa gawai'. Anakku tersenyum lebar. Itu cukup.", time: "5 jam lalu", hearts: 37 }
+            ];
+            localStorage.setItem(STORAGE_RUANG, JSON.stringify(ruangPosts));
+        }
+        renderRuang();
+    }
+    function renderRuang() {
+        const feed = document.getElementById('ruangFeed');
+        if(!feed) return;
+        feed.innerHTML = '';
+        ruangPosts.slice().reverse().forEach(post => {
+            const div = document.createElement('div');
+            div.className = 'card';
+            div.innerHTML = `
+                <div style="display: flex; gap: 12px; align-items: center; margin-bottom: 12px;">
+                    <i class="fas fa-user-circle" style="font-size: 28px; color: var(--muted);"></i>
+                    <div><p style="font-weight:600;">Orang Tua Anonim</p><p style="font-size: 10px; color: var(--muted);">${post.time}</p></div>
+                </div>
+                <p style="font-size: 14px; line-height: 1.6;">${escapeHtml(post.text)}</p>
+                <div style="margin-top: 12px;"><i class="far fa-heart"></i> ${post.hearts} orang merasa terbantu</div>
+            `;
+            feed.appendChild(div);
+        });
+    }
+    function addNewStory(text) {
+        if(!text.trim()) return;
+        const newPost = {
+            id: Date.now(),
+            text: text.trim(),
+            time: "baru saja",
+            hearts: 0
+        };
+        ruangPosts.push(newPost);
+        localStorage.setItem(STORAGE_RUANG, JSON.stringify(ruangPosts));
+        renderRuang();
+    }
+    function escapeHtml(str) { return str.replace(/[&<>]/g, function(m){if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}); }
+
+    // Home & user
+    let userName = "Orang Tua Hebat";
+    function loadUser() {
+        const stored = localStorage.getItem(STORAGE_USER);
+        if(stored) userName = stored;
+        document.getElementById('userNameDisplay').innerText = userName;
+    }
+    function updateHomeStats() {
+        const completed = getCompletedArray().length;
+        const percent = (completed/challenges.length)*100;
+        document.getElementById('homeProgressCount').innerText = completed;
+        document.getElementById('homeProgressFill').style.width = percent+'%';
+    }
+    function setUserName(name) {
+        if(name.trim()) userName = name.trim();
+        else userName = "Orang Tua Hebat";
+        localStorage.setItem(STORAGE_USER, userName);
+        document.getElementById('userNameDisplay').innerText = userName;
+    }
+
+    // Navigation system
+    let currentScreen = 'home';
+    function showScreen(screenId) {
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        const activeScreen = document.getElementById(`${screenId}Screen`);
+        if(activeScreen) activeScreen.classList.add('active');
+        currentScreen = screenId;
+        // update bottom nav active style
+        document.querySelectorAll('.nav-item').forEach(btn => {
+            if(btn.dataset.nav === screenId) btn.classList.add('active');
+            else btn.classList.remove('active');
+        });
+        // header logic
+        const header = document.getElementById('dynamicHeader');
+        if(screenId === 'home') { header.style.display = 'none'; }
+        else {
+            header.style.display = 'flex';
+            const titleMap = { cermin: 'Cermin', hadir: 'Hadir', rantai: 'Rantai', ruang: 'Ruang' };
+            document.getElementById('headerTitle').innerText = titleMap[screenId];
+        }
+        // render konten
+        if(screenId === 'cermin') renderCermin();
+        if(screenId === 'hadir') renderHadir();
+        if(screenId === 'rantai') renderRantai();
+        if(screenId === 'ruang') loadRuang();
+        if(screenId === 'home') updateHomeStats();
+    }
+
+    // Event binding
+    document.getElementById('backHomeBtn')?.addEventListener('click', () => showScreen('home'));
+    document.querySelectorAll('.nav-item, .nav-quick').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            let nav = btn.dataset.nav;
+            if(nav) showScreen(nav);
+        });
+    });
+    document.getElementById('editNameBtn')?.addEventListener('click', () => {
+        const newName = prompt("Masukkan nama panggilanmu:", userName);
+        if(newName) setUserName(newName);
+    });
+    document.getElementById('saveRantaiBtn')?.addEventListener('click', saveRantaiNotes);
+    document.getElementById('shareStoryBtn')?.addEventListener('click', () => {
+        const story = document.getElementById('newStoryInput').value;
+        if(story.trim()) { addNewStory(story); document.getElementById('newStoryInput').value = ''; alert('Cerita anonimmu telah menginspirasi.'); }
+        else alert('Tuliskan cerita dulu ya.');
+    });
+
+    // Set date home
+    const options = { weekday: 'long', day: 'numeric', month: 'long' };
+    document.getElementById('currentDate').innerText = new Date().toLocaleDateString('id-ID', options);
+    loadUser();
+    updateHomeStats();
+    showScreen('home');
 </script>
 </body>
 </html>

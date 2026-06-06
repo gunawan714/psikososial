@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>Parenting Digital Compass - Diskusi Anak & Gawai</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Roboto', system-ui, -apple-system, sans-serif;
+            background: #eef2f7;
+            padding: 16px;
+            padding-bottom: 80px;
+        }
+
+        /* Kontainer utama */
+        .app-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 32px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: auto;
+            min-height: 85vh;
+        }
+
+        /* Header */
+        .header {
+            background: #2c7da0;
+            color: white;
+            padding: 20px 20px 16px 20px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 1.7rem;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+        }
+        .header p {
+            font-size: 0.85rem;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+
+        /* Area chat */
+        .chat-area {
+            flex: 1;
+            padding: 20px 16px;
+            background: #f9fafc;
+            min-height: 400px;
+            max-height: 55vh;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        /* Bubble chat */
+        .bubble-user {
+            align-self: flex-end;
+            background: #2c7da0;
+            color: white;
+            border-radius: 24px 24px 4px 24px;
+            padding: 12px 16px;
+            max-width: 85%;
+            font-size: 0.95rem;
+        }
+        .bubble-bot {
+            align-self: flex-start;
+            background: #e4e6eb;
+            color: #1e2a3a;
+            border-radius: 24px 24px 24px 4px;
+            padding: 12px 16px;
+            max-width: 85%;
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+        .small-meta {
+            font-size: 0.7rem;
+            margin-top: 5px;
+            opacity: 0.7;
+            text-align: right;
+        }
+
+        /* Input area */
+        .input-area {
+            background: white;
+            border-top: 1px solid #ddd;
+            padding: 12px 16px 20px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        input {
+            flex: 1;
+            border: 1px solid #ccc;
+            border-radius: 30px;
+            padding: 12px 18px;
+            font-size: 1rem;
+            outline: none;
+            transition: 0.2s;
+        }
+        input:focus {
+            border-color: #2c7da0;
+        }
+        button {
+            background: #2c7da0;
+            border: none;
+            border-radius: 40px;
+            padding: 12px 20px;
+            color: white;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        button:active {
+            background: #1f5e7a;
+            transform: scale(0.97);
+        }
+
+        /* Tips harian */
+        .tips-card {
+            background: #e9f0f5;
+            margin: 8px 16px 16px 16px;
+            padding: 14px;
+            border-radius: 24px;
+            border-left: 6px solid #2c7da0;
+        }
+        .tips-card h3 {
+            font-size: 0.9rem;
+            color: #1f5e7a;
+        }
+        .tips-card p {
+            font-size: 0.85rem;
+            color: #2c3e44;
+        }
+
+        footer {
+            text-align: center;
+            font-size: 0.7rem;
+            padding: 12px;
+            color: #6c7a89;
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <div class="header">
+        <h1>📱 Parenting Compass</h1>
+        <p>Diskusi harian · Dampak gawai pada Gen Z & Alpha</p>
+    </div>
+
+    <div class="chat-area" id="chatArea">
+        <div class="bubble-bot">
+            👋 Halo Ayah/Bunda! Ceritakan tentang perkembangan anak hari ini, terutama terkait penggunaan gadget, HP, atau game. Saya akan membantu berdasarkan psikologi Islam dan umum.
+        </div>
+        <div class="bubble-bot">
+            💡 Contoh: "Anakku usia 5 tahun main game terus", "Remaja 13 tahun sulit lepas dari medsos", atau "Anak tantrum kalau HP diambil".
+        </div>
+    </div>
+
+    <!-- Tips harian dinamis berdasarkan jam -->
+    <div class="tips-card" id="dailyTip">
+        <h3>✨ Tips hari ini (berdasarkan buku)</h3>
+        <p>Memuat saran khusus...</p>
+    </div>
+
+    <div class="input-area">
+        <input type="text" id="userInput" placeholder="Tulis pertanyaan atau keluhan...">
+        <button id="sendBtn">Kirim</button>
+    </div>
+    <footer>Berdasarkan Buku "Konsep PAUD Psikologi Islam" & "Psikologi Anak" (2020-2023) · Solusi valid untuk orang tua</footer>
+</div>
+
+<script>
+    // Basis pengetahuan dari kedua buku (rule-based)
+    function getBotResponse(question) {
+        let lower = question.toLowerCase();
+        
+        // Deteksi kata kunci
+        if (lower.includes("gadget") || lower.includes("hp") || lower.includes("gawai") || lower.includes("game") || lower.includes("youtube") || lower.includes("tiktok")) {
+            if (lower.includes("kecanduan") || lower.includes("terus") || lower.includes("lama") || lower.includes("jam")) {
+                return "📵 Menurut Psikologi Anak (Bab VI), paparan gawai berlebihan membuat anak pasif dan sulit konsentrasi. Solusi dari Buku Muazar Habibi (metode pembiasaan & perhatian):\n✅ Batasi waktu maksimal 1 jam/hari untuk anak usia 3-6 tahun, 1.5 jam untuk 7-12 tahun.\n✅ Ajak bermain fisik/luar ruangan minimal 30 menit.\n✅ Jadi teladan: kurangi main HP di depan anak.\n✅ Jika melanggar, beri konsekuensi logis (bukan kekerasan) seperti tidak boleh main gadget esok hari.";
+            }
+            if (lower.includes("tantrum") || lower.includes("marah") || lower.includes("nangis") || lower.includes("ngamuk")) {
+                return "😢 Tantrum saat gadget diambil adalah hal umum. Buku Habibi halaman 89-91 menekankan: hukuman (jika perlu) hanya setelah usia 10 tahun, dan pun bertahap. Langkah yang disarankan:\n1️⃣ Tetap tenang, jangan membentak.\n2️⃣ Alihkan perhatian ke aktivitas menyenangkan lain (menggambar, bermain bola).\n3️⃣ Jelaskan dengan lembut alasan gadget diambil (misal: waktu habis, mata butuh istirahat).\n4️⃣ Konsisten dengan aturan yang sudah disepakati.";
+            }
+            if (lower.includes("fokus") || lower.includes("belajar") || lower.includes("sekolah") || lower.includes("nilai")) {
+                return "📚 Gangguan fokus akibat gawai banyak terjadi. Psikologi Anak (Bab V) & Habibi (Bab VI) menyarankan:\n✅ Buat 'zona bebas gawai' saat belajar dan 1 jam sebelum tidur.\n✅ Beri pujian setiap kali anak berhasil fokus selama 20 menit.\n✅ Libatkan anak dalam membuat jadwal harian (termasuk waktu bermain gawai).\n✅ Orang tua perlu memberikan perhatian penuh saat anak belajar (pengawasan positif).";
+            }
+            // default tentang gadget
+            return "📱 Terima kasih sudah berbagi. Dampak gawai pada Generasi Alpha dan Z memang perlu dikelola. Berdasarkan buku 'Psikologi Anak' (hal.86-87), pendampingan orang tua saat anak menggunakan gawai sangat penting (<20% orang tua yang mendampingi). Saran saya:\n• Temani anak menonton/bermain game.\n• Diskusikan konten yang baik dan buruk.\n• Ajak anak melakukan kegiatan offline yang dia sukai.\n• Jangan jadikan gadget sebagai 'pengasuh' pengganti interaksi.";
+        }
+
+        if (lower.includes("sosial") || lower.includes("teman") || lower.includes("bermain") || lower.includes("malu") || lower.includes("pemalu")) {
+            return "🤝 Keterampilan sosial anak bisa terganggu oleh terlalu banyak waktu di depan layar. Buku Psikologi Anak Bab IV (penanganan anak di lingkungan keluarga) menyarankan: ajak anak bermain dengan teman sebaya secara langsung, beri contoh interaksi yang baik, dan batasi gawai di rumah. Kegiatan kelompok seperti olahraga atau klub sangat membantu.";
+        }
+        if (lower.includes("disiplin") || lower.includes("aturan") || lower.includes("melawan")) {
+            return "⚖️ Mengenai disiplin, Buku Muazar Habibi (metode pemberian hukuman) mengingatkan: hindari kekerasan, mulai dari yang paling ringan (teguran, tidak diberi pujian), baru setelah usia 10 tahun boleh pukulan ringan di telapak tangan jika terpaksa. Yang terpenting: konsisten dan penuh kasih sayang. Jelaskan alasan di balik setiap aturan.";
+        }
+        if (lower.includes("doa") || lower.includes("agama") || lower.includes("islam") || lower.includes("sholat") || lower.includes("mengaji")) {
+            return "🕌 Dari Buku Habibi (Bab I & V), pendidikan agama harus dimulai sejak dini, bahkan sejak dalam kandungan. Untuk anak yang sulit diajak ibadah:\n• Jadilah teladan: kerjakan sholat berjamaah di rumah.\n• Ajak ke masjid/musholla dengan cara menyenangkan.\n• Ceritakan kisah nabi yang menarik (metode nasihat).\n• Beri apresiasi kecil jika rajin.\nJangan paksa dengan kekerasan, tapi biasakan secara bertahap.";
+        }
+        if (lower.includes("usia") || lower.includes("umur") || lower.includes("tahap")) {
+            return "👶 Setiap usia memiliki tugas perkembangan berbeda (Psikologi Anak Bab I & V). Untuk anak 0-6 tahun: fokus pembentukan kebiasaan dan kasih sayang. Usia 6-12 tahun: tanamkan disiplin dan tanggung jawab. Remaja: beri ruang diskusi dan kepercayaan. Sesuaikan aturan gawai dengan tahap usia.";
+        }
+        if (lower.includes("terima kasih") || lower.includes("makasih")) {
+            return "Sama-sama, Bunda/Ayah. Semoga anak-anak kita tumbuh menjadi generasi yang sehat fisik, mental, dan spiritual. Jangan ragu untuk bertanya lagi setiap hari ya! 🥰";
+        }
+        
+        // Respons default jika tidak terdeteksi
+        return "Terima kasih atas ceritanya. Dari kedua buku referensi, prinsip utama mendidik anak di era digital adalah: keteladanan, pembiasaan, perhatian (pengawasan), dan kasih sayang. Coba ceritakan lebih spesifik ya, misal: 'Anak usia 4 tahun suka main game sampai lupa waktu' atau 'Remaja sulit fokus belajar karena HP'. Saya akan beri solusi lebih tepat.";
+    }
+
+    // Menampilkan tips berdasarkan waktu (pagi/siang/malam)
+    function updateDailyTip() {
+        const hours = new Date().getHours();
+        let tipText = "";
+        if (hours < 11) {
+            tipText = "🌅 Pagi hari: Mulai dengan kebiasaan positif tanpa gawai. Ajak anak sholat/doa pagi, sarapan bersama, dan tanyakan rencana bermainnya hari ini. (Sumber: Buku Habibi - pembiasaan)";
+        } else if (hours < 15) {
+            tipText = "☀️ Siang: Jika anak mulai bosan dan minta HP, tawarkan permainan fisik seperti lempar bola atau menggambar. Batasi gadget maksimal 30 menit setelah makan siang.";
+        } else {
+            tipText = "🌙 Malam: Hindari gawai 1-2 jam sebelum tidur. Bacakan cerita atau ngobrol ringan tentang kegiatan hari ini. Ini memperkuat ikatan emosional (Psikologi Anak Bab IV tentang peran orang tua).";
+        }
+        document.getElementById("dailyTip").innerHTML = `<h3>✨ Tips harian (${hours<11 ? 'Pagi' : (hours<15 ? 'Siang' : 'Malam')})</h3><p>${tipText}</p>`;
+    }
+
+    // Menambahkan chat ke area
+    function addMessage(text, isUser) {
+        const chatDiv = document.getElementById("chatArea");
+        const msgDiv = document.createElement("div");
+        msgDiv.className = isUser ? "bubble-user" : "bubble-bot";
+        msgDiv.innerText = text;
+        chatDiv.appendChild(msgDiv);
+        chatDiv.scrollTop = chatDiv.scrollHeight;
+    }
+
+    function handleUserMessage() {
+        const input = document.getElementById("userInput");
+        const question = input.value.trim();
+        if (question === "") return;
+        
+        addMessage(question, true);
+        input.value = "";
+        
+        // Simulasi mengetik bot (tunda sebentar)
+        setTimeout(() => {
+            const answer = getBotResponse(question);
+            addMessage(answer, false);
+        }, 300);
+    }
+
+    // Event listener
+    document.getElementById("sendBtn").addEventListener("click", handleUserMessage);
+    document.getElementById("userInput").addEventListener("keypress", (e) => {
+        if (e.key === "Enter") handleUserMessage();
+    });
+    
+    // Inisialisasi tips
+    updateDailyTip();
+    // Set tips setiap jam berubah (opsional)
+    setInterval(updateDailyTip, 3600000);
+</script>
+</body>
+</html>

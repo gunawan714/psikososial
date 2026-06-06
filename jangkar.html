@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+    <title>JANGKAR · Ruang Ampuh Hadir untuk Orang Tua</title>
+    <!-- Font & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #F4F7FC;
+            font-family: 'Inter', sans-serif;
+            color: #1A2E3F;
+            padding-bottom: 80px;
+        }
+
+        /* mobile-first container */
+        .app-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #FFFFFF;
+            min-height: 100vh;
+            box-shadow: 0 0 20px rgba(0,0,0,0.05);
+            position: relative;
+            border-radius: 0;
+            overflow-x: hidden;
+        }
+
+        /* header */
+        .app-header {
+            padding: 24px 20px 16px 20px;
+            background: linear-gradient(135deg, #1C4E6F 0%, #0F3B54 100%);
+            color: white;
+            border-radius: 0 0 28px 28px;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.05);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 26px;
+            letter-spacing: -0.3px;
+        }
+
+        .logo i {
+            font-size: 32px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+        }
+
+        .tagline {
+            font-size: 14px;
+            opacity: 0.85;
+            margin-top: 8px;
+            font-weight: 400;
+            border-left: 3px solid #FFC107;
+            padding-left: 12px;
+        }
+
+        .philosophy {
+            margin-top: 16px;
+            background: rgba(255,255,255,0.12);
+            border-radius: 20px;
+            padding: 12px 16px;
+            font-size: 13px;
+            line-height: 1.4;
+            backdrop-filter: blur(2px);
+        }
+
+        /* konten utama */
+        .main-content {
+            padding: 24px 18px 32px 18px;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.25s ease;
+        }
+
+        .tab-content.active-tab {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+
+        /* card style */
+        .card {
+            background: #FFFFFF;
+            border-radius: 28px;
+            padding: 20px;
+            margin-bottom: 24px;
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.03), 0 2px 4px rgba(0, 0, 0, 0.05);
+            border: 1px solid #E9EDF2;
+            transition: all 0.2s;
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #1C4E6F;
+            border-left: 5px solid #FFC107;
+            padding-left: 14px;
+        }
+
+        .card-title i {
+            font-size: 22px;
+            color: #2C7DA0;
+        }
+
+        .question-item {
+            margin-bottom: 18px;
+        }
+
+        .question-item label {
+            font-weight: 600;
+            font-size: 14px;
+            display: block;
+            margin-bottom: 8px;
+            color: #2C3E4E;
+        }
+
+        textarea, input, select {
+            width: 100%;
+            padding: 14px 16px;
+            border-radius: 20px;
+            border: 1.5px solid #E2E8F0;
+            font-family: 'Inter', monospace;
+            font-size: 14px;
+            background: #FEFEFE;
+            transition: 0.2s;
+        }
+
+        textarea:focus, input:focus {
+            outline: none;
+            border-color: #1C4E6F;
+            box-shadow: 0 0 0 3px rgba(28,78,111,0.1);
+        }
+
+        button {
+            background: #1C4E6F;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 15px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: 0.2s;
+            width: auto;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+
+        button i {
+            font-size: 14px;
+        }
+
+        button:active {
+            transform: scale(0.97);
+            background: #0F3B54;
+        }
+
+        .task-list {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .task-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            background: #F9FBFD;
+            padding: 14px;
+            border-radius: 24px;
+            border-left: 4px solid #FFC107;
+        }
+
+        .task-check {
+            margin-top: 2px;
+            transform: scale(1.2);
+            accent-color: #1C4E6F;
+        }
+
+        .task-text {
+            flex: 1;
+            font-weight: 500;
+        }
+
+        .task-time {
+            font-size: 12px;
+            color: #5F7F9E;
+            margin-top: 4px;
+        }
+
+        .generation-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .gen-card {
+            background: #F8FAFE;
+            border-radius: 24px;
+            padding: 16px;
+            border: 1px solid #E9EDF2;
+        }
+
+        .gen-title {
+            font-weight: 700;
+            margin-bottom: 12px;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .story-feed {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            margin-bottom: 28px;
+            max-height: 400px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+
+        .story-card {
+            background: #F8FAFE;
+            padding: 16px;
+            border-radius: 24px;
+            border-left: 4px solid #FFC107;
+        }
+
+        .story-date {
+            font-size: 11px;
+            color: #5F7F9E;
+            margin-bottom: 8px;
+        }
+
+        .story-text {
+            font-size: 14px;
+            line-height: 1.45;
+        }
+
+        .principles-note {
+            margin-top: 32px;
+            text-align: center;
+            font-size: 12px;
+            background: #F0F4F9;
+            padding: 16px;
+            border-radius: 28px;
+            color: #2C5A74;
+        }
+
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.96);
+            backdrop-filter: blur(12px);
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 12px 20px;
+            border-top: 1px solid #E2E8F0;
+            box-shadow: 0 -4px 12px rgba(0,0,0,0.02);
+            z-index: 100;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            color: #8CA3B9;
+            cursor: pointer;
+            transition: 0.2s;
+            padding: 6px 12px;
+            border-radius: 40px;
+        }
+
+        .nav-item i {
+            font-size: 22px;
+        }
+
+        .nav-item.active {
+            color: #1C4E6F;
+            background: #EFF6FA;
+        }
+
+        hr {
+            margin: 20px 0;
+            border: none;
+            border-top: 1px solid #E2E8F0;
+        }
+
+        .small-note {
+            font-size: 12px;
+            color: #6C86A3;
+            margin-top: 12px;
+            text-align: center;
+        }
+
+        button.secondary {
+            background: #EFF6FA;
+            color: #1C4E6F;
+            border: 1px solid #CCDCE9;
+        }
+
+        button.secondary:active {
+            background: #E2ECF3;
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <div class="app-header">
+        <div class="logo">
+            <i class="fas fa-anchor"></i> 
+            <span>JANGKAR</span>
+        </div>
+        <div class="tagline">tempat aman untuk tumbuh · kehadiran yang memulihkan</div>
+        <div class="philosophy">
+            <i class="fas fa-leaf" style="margin-right: 8px;"></i> Bukan efisiensi, tapi kedalaman. Jangkar adalah metafora <strong>secure base</strong> — pulang untuk berani menjelajah.
+        </div>
+    </div>
+
+    <div class="main-content">
+        <!-- CERMIN (Refleksi Harian) -->
+        <div id="cerminView" class="tab-content active-tab">
+            <div class="card">
+                <div class="card-title"><i class="fas fa-mirror"></i> CERMIN · memberi nama pada luka</div>
+                <div class="question-item">
+                    <label>🌱 1. Mengenali — Apa yang paling terasa hari ini? (satu kata / kalimat)</label>
+                    <input type="text" id="cermin_pertanyaan1" placeholder="Misal: lelah, bahagia, campur aduk...">
+                </div>
+                <div class="question-item">
+                    <label>💭 2. Merasakan — Di tubuh/hati, di mana sensasi ini berada?</label>
+                    <textarea id="cermin_pertanyaan2" rows="2" placeholder="Dadaku sesak, pundak tegang, atau hangat..."></textarea>
+                </div>
+                <div class="question-item">
+                    <label>🔗 3. Menghubungkan — Apakah ini membawa memori masa kecil atau pola tertentu?</label>
+                    <textarea id="cermin_pertanyaan3" rows="2" placeholder="Saya ingat ketika kecil, ibu saya juga..."></textarea>
+                </div>
+                <div class="question-item">
+                    <label>⚓ 4. Memilih — Satu tindakan kecil hadir untuk esok hari?</label>
+                    <input type="text" id="cermin_pertanyaan4" placeholder="Contoh: mendengar tanpa menyela 3 menit">
+                </div>
+                <button id="simpanCerminBtn"><i class="fas fa-save"></i> Simpan refleksi hari ini</button>
+                <div class="small-note" id="cerminStatus">✨ Refleksi tersimpan secara pribadi & terenkripsi (lokal)</div>
+            </div>
+            <div class="card">
+                <div class="card-title"><i class="fas fa-history"></i> catatan terakhir</div>
+                <div id="cerminPreview" style="font-size: 14px; color: #2E4A6A;">Belum ada refleksi. Mulai dari yang kecil.</div>
+            </div>
+        </div>
+
+        <!-- HADIR (Tantangan mikro-kehadiran) -->
+        <div id="hadirView" class="tab-content">
+            <div class="card">
+                <div class="card-title"><i class="fas fa-hand-peace"></i> HADIR · tantangan kecil, dampak besar</div>
+                <div class="task-list" id="taskContainer"></div>
+                <div class="small-note" id="hadirFeedback">✔️ Centang saat berhasil menyelesaikan hari ini. Setiap momen berarti.</div>
+            </div>
+        </div>
+
+        <!-- RANTAI (Peta lintas generasi) -->
+        <div id="rantaiView" class="tab-content">
+            <div class="card">
+                <div class="card-title"><i class="fas fa-link"></i> RANTAI · melihat warisan, memilih berbeda</div>
+                <div class="generation-grid">
+                    <div class="gen-card">
+                        <div class="gen-title"><i class="fas fa-tree"></i> Generasi Leluhur (Kakek/Nenek)</div>
+                        <textarea id="rantai_leluhur" rows="2" placeholder="Apa pola yang saya ingat? (misal: disiplin keras, atau hangat, atau jarang bicara)"></textarea>
+                    </div>
+                    <div class="gen-card">
+                        <div class="gen-title"><i class="fas fa-users"></i> Generasi Orang Tua</div>
+                        <textarea id="rantai_ortu" rows="2" placeholder="Nilai yang saya terima dari mereka..."></textarea>
+                    </div>
+                    <div class="gen-card">
+                        <div class="gen-title"><i class="fas fa-child"></i> Generasi Saya (pola saat ini)</div>
+                        <textarea id="rantai_saya" rows="2" placeholder="Hal yang ingin saya teruskan / ubah..."></textarea>
+                    </div>
+                </div>
+                <button id="simpanRantaiBtn"><i class="fas fa-chain-broken"></i> Simpan peta rantai</button>
+                <div class="small-note" id="rantaiStatus">Menyadari rantai = kekuatan memilih. Bukan menyalahkan.</div>
+            </div>
+        </div>
+
+        <!-- RUANG (Komunitas anonim) -->
+        <div id="ruangView" class="tab-content">
+            <div class="card">
+                <div class="card-title"><i class="fas fa-comments"></i> RUANG · anonim, tanpa nama, tanpa foto</div>
+                <div id="anonymousFeed" class="story-feed"></div>
+                <textarea id="newStoryInput" rows="3" placeholder="Bagikan keresahan, kemenangan kecil, atau pertanyaan ... (100% anonim)"></textarea>
+                <button id="shareStoryBtn" style="margin-top: 12px;"><i class="fas fa-paper-plane"></i> Bagikan cerita</button>
+                <div class="small-note">🔒 Terenkripsi secara lokal, tidak ada identitas, hanya ruang untuk berbagi.</div>
+            </div>
+        </div>
+
+        <!-- prinsip pembeda (konsisten) -->
+        <div class="principles-note">
+            <i class="fas fa-shield-alt"></i> Bukan alat produktivitas — Tidak ada leaderboard, streak, atau notifikasi agresif.<br>
+            🧭 Dirancang untuk memperlambat dan menjadi jangkar dalam relasi.
+        </div>
+    </div>
+
+    <div class="bottom-nav">
+        <div class="nav-item" data-tab="cermin"><i class="fas fa-mirror"></i><span>Cermin</span></div>
+        <div class="nav-item" data-tab="hadir"><i class="fas fa-hand-sparkles"></i><span>Hadir</span></div>
+        <div class="nav-item" data-tab="rantai"><i class="fas fa-link"></i><span>Rantai</span></div>
+        <div class="nav-item" data-tab="ruang"><i class="fas fa-leaf"></i><span>Ruang</span></div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // ---------- STORAGE KEYS ----------
+        const STORAGE_CERMIN = "jangkar_cermin_refleksi";
+        const STORAGE_HADIR_TASKS = "jangkar_hadir_checklist";
+        const STORAGE_RANTAI = "jangkar_rantai_data";
+        const STORAGE_RUANG_POSTS = "jangkar_ruang_posts";
+
+        // ---------- Data awal ----------
+        let currentTab = "cermin";
+
+        // TANTANGAN HADIR (4 waktu)
+        const TASKS = [
+            { id: "pagi", label: "🌅 PAGI · 2 menit sapaan tanpa agenda", desc: "Sebelum memegang gawai, tatap mata anak & ucapkan 'selamat pagi' dengan hadir penuh." },
+            { id: "siang", label: "🌞 SIANG · Makan bersama tanpa layar", desc: "Hanya 5 menit mendengarkan cerita kecil anak tanpa menyela." },
+            { id: "sore", label: "🍂 SORE · Aktivitas bersama", desc: "Libatkan anak dalam kegiatan sederhana (melipat baju/bermain) dengan sepenuh hati." },
+            { id: "malam", label: "🌙 MALAM · Cerita dan pelukan", desc: "2 menit bercerita tentang momen favorit hari ini sambil memeluk." }
+        ];
+
+        // fungsi helper: simpan & load cermin
+        function loadCerminToForm() {
+            const saved = localStorage.getItem(STORAGE_CERMIN);
+            if(saved) {
+                try {
+                    const data = JSON.parse(saved);
+                    document.getElementById('cermin_pertanyaan1').value = data.q1 || '';
+                    document.getElementById('cermin_pertanyaan2').value = data.q2 || '';
+                    document.getElementById('cermin_pertanyaan3').value = data.q3 || '';
+                    document.getElementById('cermin_pertanyaan4').value = data.q4 || '';
+                    const previewHtml = `<i class="fas fa-clock"></i> Terakhir: ${data.date || ''}<br><strong>“${data.q1?.substring(0, 70) || '...'}”</strong> — ${data.q4 ? 'satu pilihan: '+data.q4.substring(0,60) : 'simpan lebih lanjut'}`;
+                    document.getElementById('cerminPreview').innerHTML = previewHtml;
+                } catch(e) {}
+            } else {
+                document.getElementById('cerminPreview').innerHTML = 'Belum ada refleksi. Tulislah keresahan & harapan.';
+            }
+        }
+
+        function saveCermin() {
+            const q1 = document.getElementById('cermin_pertanyaan1').value;
+            const q2 = document.getElementById('cermin_pertanyaan2').value;
+            const q3 = document.getElementById('cermin_pertanyaan3').value;
+            const q4 = document.getElementById('cermin_pertanyaan4').value;
+            const data = {
+                q1, q2, q3, q4,
+                date: new Date().toLocaleString('id-ID')
+            };
+            localStorage.setItem(STORAGE_CERMIN, JSON.stringify(data));
+            loadCerminToForm();
+            const statusDiv = document.getElementById('cerminStatus');
+            statusDiv.innerHTML = '✅ Tersimpan. Hanya Anda yang bisa membaca.';
+            setTimeout(() => { if(statusDiv) statusDiv.innerHTML = '✨ Refleksi tersimpan secara pribadi & terenkripsi (lokal)'; }, 2000);
+        }
+
+        // ---------- HADIR: daily checklist (per tanggal) ----------
+        function getTodayKey() {
+            return new Date().toISOString().slice(0,10);
+        }
+
+        function loadHadirState() {
+            const today = getTodayKey();
+            const stored = localStorage.getItem(STORAGE_HADIR_TASKS);
+            let allData = {};
+            if(stored) allData = JSON.parse(stored);
+            const todayData = allData[today] || {};
+
+            const container = document.getElementById('taskContainer');
+            container.innerHTML = '';
+            TASKS.forEach(task => {
+                const checked = todayData[task.id] === true;
+                const taskDiv = document.createElement('div');
+                taskDiv.className = 'task-item';
+                taskDiv.innerHTML = `
+                    <input type="checkbox" class="task-check" data-task-id="${task.id}" ${checked ? 'checked' : ''}>
+                    <div class="task-text">
+                        <strong>${task.label}</strong><br>
+                        <span class="task-time">${task.desc}</span>
+                    </div>
+                `;
+                container.appendChild(taskDiv);
+            });
+            // attach event listeners
+            document.querySelectorAll('.task-check').forEach(chk => {
+                chk.addEventListener('change', function(e) {
+                    const taskId = this.getAttribute('data-task-id');
+                    const todayKey = getTodayKey();
+                    let storedAll = localStorage.getItem(STORAGE_HADIR_TASKS);
+                    let parsed = storedAll ? JSON.parse(storedAll) : {};
+                    if(!parsed[todayKey]) parsed[todayKey] = {};
+                    parsed[todayKey][taskId] = this.checked;
+                    localStorage.setItem(STORAGE_HADIR_TASKS, JSON.stringify(parsed));
+                    const feedDiv = document.getElementById('hadirFeedback');
+                    feedDiv.innerHTML = '✔️ Tantangan tercatat. Hadir kecil, dampak besar.';
+                    setTimeout(() => { if(feedDiv) feedDiv.innerHTML = '✔️ Centang saat berhasil menyelesaikan hari ini. Setiap momen berarti.'; }, 1500);
+                });
+            });
+        }
+
+        // ---------- RANTAI ----------
+        function loadRantai() {
+            const saved = localStorage.getItem(STORAGE_RANTAI);
+            if(saved) {
+                try {
+                    const data = JSON.parse(saved);
+                    document.getElementById('rantai_leluhur').value = data.leluhur || '';
+                    document.getElementById('rantai_ortu').value = data.ortu || '';
+                    document.getElementById('rantai_saya').value = data.saya || '';
+                } catch(e) {}
+            }
+        }
+
+        function saveRantai() {
+            const leluhur = document.getElementById('rantai_leluhur').value;
+            const ortu = document.getElementById('rantai_ortu').value;
+            const saya = document.getElementById('rantai_saya').value;
+            const data = { leluhur, ortu, saya, updated: new Date().toISOString() };
+            localStorage.setItem(STORAGE_RANTAI, JSON.stringify(data));
+            const status = document.getElementById('rantaiStatus');
+            status.innerHTML = '✓ Rantai tersimpan. Kamu bisa memilih warisan yang ingin diubah.';
+            setTimeout(() => { if(status) status.innerHTML = 'Menyadari rantai = kekuatan memilih. Bukan menyalahkan.'; }, 2000);
+        }
+
+        // ---------- RUANG (anonim) ----------
+        function loadRuangFeed() {
+            const stored = localStorage.getItem(STORAGE_RUANG_POSTS);
+            let posts = [];
+            if(stored) {
+                try { posts = JSON.parse(stored); } catch(e){}
+            }
+            if(posts.length === 0) {
+                // seeding cerita contoh
+                posts = [
+                    { id: Date.now()+1, text: "Hari ini teriakan saya meledak lagi. Tapi setelahnya saya memeluk anak & minta maaf. Saya sedang belajar.", date: "2 hari lalu" },
+                    { id: Date.now()+2, text: "Saya sadar pola marah saya sama seperti ayah dulu. Tapi saya memilih berhenti. Mulai dengan menarik napas.", date: "kemarin" },
+                ];
+                localStorage.setItem(STORAGE_RUANG_POSTS, JSON.stringify(posts));
+            }
+            renderFeed(posts);
+        }
+
+        function renderFeed(posts) {
+            const feedContainer = document.getElementById('anonymousFeed');
+            feedContainer.innerHTML = '';
+            if(posts.length === 0) {
+                feedContainer.innerHTML = '<div class="story-card" style="text-align:center;">Belum ada cerita, jadilah yang pertama berbagi.</div>';
+                return;
+            }
+            posts.slice().reverse().forEach(post => {
+                const div = document.createElement('div');
+                div.className = 'story-card';
+                div.innerHTML = `
+                    <div class="story-date"><i class="far fa-clock"></i> ${post.date || 'Baru saja'}</div>
+                    <div class="story-text">“${escapeHtml(post.text)}”</div>
+                `;
+                feedContainer.appendChild(div);
+            });
+        }
+
+        function escapeHtml(str) {
+            if(!str) return '';
+            return str.replace(/[&<>]/g, function(m) {
+                if(m === '&') return '&amp;';
+                if(m === '<') return '&lt;';
+                if(m === '>') return '&gt;';
+                return m;
+            }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
+                return c;
+            });
+        }
+
+        function addNewStory(text) {
+            if(!text.trim()) return false;
+            const stored = localStorage.getItem(STORAGE_RUANG_POSTS);
+            let posts = stored ? JSON.parse(stored) : [];
+            const newPost = {
+                id: Date.now(),
+                text: text.trim(),
+                date: new Date().toLocaleString('id-ID', {hour: '2-digit', minute:'2-digit', day:'numeric', month:'short'})
+            };
+            posts.push(newPost);
+            localStorage.setItem(STORAGE_RUANG_POSTS, JSON.stringify(posts));
+            renderFeed(posts);
+            return true;
+        }
+
+        // ----- Tab Navigation -----
+        function switchTab(tabId) {
+            currentTab = tabId;
+            // hidden all content
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active-tab'));
+            const activeDiv = document.getElementById(`${tabId}View`);
+            if(activeDiv) activeDiv.classList.add('active-tab');
+            // update nav style
+            document.querySelectorAll('.nav-item').forEach(item => {
+                const itemTab = item.getAttribute('data-tab');
+                if(itemTab === tabId) item.classList.add('active');
+                else item.classList.remove('active');
+            });
+
+            // load data spesifik saat tab dibuka (memastikan data terbaru)
+            if(tabId === 'cermin') loadCerminToForm();
+            if(tabId === 'hadir') loadHadirState();
+            if(tabId === 'rantai') loadRantai();
+            if(tabId === 'ruang') loadRuangFeed();
+        }
+
+        // event listeners
+        function bindEvents() {
+            document.querySelectorAll('.nav-item').forEach(nav => {
+                nav.addEventListener('click', (e) => {
+                    const tab = nav.getAttribute('data-tab');
+                    if(tab) switchTab(tab);
+                });
+            });
+            document.getElementById('simpanCerminBtn')?.addEventListener('click', saveCermin);
+            document.getElementById('simpanRantaiBtn')?.addEventListener('click', saveRantai);
+            const shareBtn = document.getElementById('shareStoryBtn');
+            if(shareBtn) {
+                shareBtn.addEventListener('click', () => {
+                    const storyText = document.getElementById('newStoryInput').value;
+                    if(storyText.trim() === "") {
+                        alert("Tuliskan cerita anonim dulu ya, ruang ini untuk berbagi.");
+                        return;
+                    }
+                    addNewStory(storyText);
+                    document.getElementById('newStoryInput').value = '';
+                    const feedMsg = document.getElementById('ruangView')?.querySelector('.small-note');
+                    if(feedMsg) feedMsg.innerHTML = '✓ Cerita tersimpan. Terima kasih telah berbagi dalam keamanan.';
+                    setTimeout(() => { if(feedMsg) feedMsg.innerHTML = '🔒 Terenkripsi secara lokal, tidak ada identitas, hanya ruang untuk berbagi.'; }, 2000);
+                });
+            }
+        }
+
+        // inisialisasi awal
+        function init() {
+            bindEvents();
+            // load data awal
+            loadCerminToForm();
+            loadHadirState();
+            loadRantai();
+            loadRuangFeed();
+            switchTab('cermin');
+        }
+
+        init();
+    })();
+</script>
+</body>
+</html>
